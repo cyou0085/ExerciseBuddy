@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/activity_item_layout" android:tag="333"
+    android:focusableInTouchMode="true">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/text1"
+        android:id="@+id/textActivity"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/text2"
+        android:id="@+id/textDay"
+        android:layout_below="@+id/textActivity"
+        android:layout_alignLeft="@+id/textActivity"
+        android:layout_alignStart="@+id/textActivity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/text3"
+        android:id="@+id/textStart"
+        android:layout_below="@+id/textDay"
+        android:layout_alignLeft="@+id/textDay"
+        android:layout_alignStart="@+id/textDay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/text4"
+        android:id="@+id/textEnd"
+        android:layout_below="@+id/textStart"
+        android:layout_alignLeft="@+id/textStart"
+        android:layout_alignStart="@+id/textStart" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/tvActivity"
+        android:layout_alignBottom="@+id/textActivity"
+        android:layout_toRightOf="@+id/textActivity"
+        android:layout_toEndOf="@+id/textActivity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/tvDay"
+        android:layout_above="@+id/textStart"
+        android:layout_toRightOf="@+id/textDay"
+        android:layout_toEndOf="@+id/textDay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/tvStart"
+        android:layout_below="@+id/textDay"
+        android:layout_toRightOf="@+id/textStart"
+        android:layout_toEndOf="@+id/textStart" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/tvEnd"
+        android:layout_alignTop="@+id/textEnd"
+        android:layout_toRightOf="@+id/textEnd"
+        android:layout_toEndOf="@+id/textEnd" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update"
+        android:id="@+id/updateButton"
+        android:layout_marginRight="46dp"
+        android:layout_marginEnd="46dp"
+        android:layout_below="@+id/textActivity"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="EditActivity" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/tvID"
+        android:layout_below="@+id/textEnd" />
+
+</RelativeLayout>
