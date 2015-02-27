@@ -26,6 +26,17 @@ public class UpdateActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
+        String activityID = getIntent().getStringExtra(MainActivity.ACTIVITY_ID);
+        if (activityID != null) {
+            Log.i("DAVID", activityID);
+            db.open();
+            db.getRecord(Integer.parseInt(activityID));
+            db.close();
+        }
+        else {
+            Log.i("DW", "no good");
+        }
+
         Spinner dropdown = (Spinner)findViewById(R.id.ActivityName);
         String[] items = new String[]{"Sleep", "Work", "Workout","Class","Eating"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -36,8 +47,8 @@ public class UpdateActivity extends ActionBarActivity {
         String[] itemsWeek = new String[]{"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsWeek);
         dropdownWeek.setAdapter(adapter2);
-        String passedvar = getIntent().getStringExtra(MainActivity.Extra_Link);
-        dropdownWeek.setSelection(Integer.parseInt(passedvar));
+//        String activityID = getIntent().getStringExtra(MainActivity.ACTIVITY_ID);
+//        dropdownWeek.setSelection(Integer.parseInt(passedvar));
 
         Spinner dropdownAM = (Spinner)findViewById(R.id.spinner3);
         String[] itemsTime = new String[]{"AM","PM"};
@@ -50,7 +61,7 @@ public class UpdateActivity extends ActionBarActivity {
         dropdownAM2.setAdapter(adapter3);
 
         EditText startText = (EditText)findViewById((R.id.startTime));
-        startText.setText(passedvar);
+//        startText.setText(passedvar);
     }
 
     @Override

@@ -36,7 +36,7 @@ import java.util.HashMap;
 public class MainActivity extends ActionBarActivity {
     ActivityListAdapter adapter;
     ArrayList<Activities> activityList = new ArrayList <Activities>();
-    public final static String Extra_Link = "com.example.carlos.exercisebuddy.MainActivity.tvID";
+    public final static String ACTIVITY_ID = "com.example.carlos.exercisebuddy.MainActivity.tvID";
     //@Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -131,24 +131,22 @@ public class MainActivity extends ActionBarActivity {
 
                 activities = new Activities(c.getString(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4));
                 activityList.add(activities);
-                adapter = new ActivityListAdapter(activityList,MainActivity.this);
-                lv.setAdapter(adapter);
-
             }while(c.moveToNext());
         }
-        lv.setOnItemClickListener(onListClick);
+        adapter = new ActivityListAdapter(activityList, MainActivity.this);
+        lv.setAdapter(adapter);
+        lv.setClickable(true);
+        lv.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getBaseContext(),UpdateActivity.class);
+                String activityId = activityList.get(position).getID();
+                Log.i("DW", "Adding " + activityId + " to intent");
+                i.putExtra(ACTIVITY_ID, activityId);
+                startActivity(i);
+            }
+        });
     }
-
-
-    private AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener(){
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Intent i = new Intent(getBaseContext(),UpdateActivity.class);
-            i.putExtra(Extra_Link,String.valueOf(R.id.tvID));
-            startActivity(i);
-        }
-    };
 
 
     @Override
