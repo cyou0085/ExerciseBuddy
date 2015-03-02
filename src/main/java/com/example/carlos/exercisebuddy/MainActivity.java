@@ -2,7 +2,6 @@ package com.example.carlos.exercisebuddy;
 
 import android.app.SearchManager;
 import android.content.Intent;
-import android.graphics.Color;
 import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -15,13 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.database.Cursor;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,12 +23,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class MainActivity extends ActionBarActivity {
     ActivityListAdapter adapter;
-    ArrayList<Activities> activityList = new ArrayList <Activities>();
+    ArrayList<Activity> activityList = new ArrayList <Activity>();
     public final static String ACTIVITY_ID = "com.example.carlos.exercisebuddy.MainActivity.tvID";
     //@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +36,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         try {
-            String destPath = "/data/data/" + getPackageName() + "/databases/AssignmentDB";
+            String destPath = "/data/data/" + getPackageName() + "/databases/ActivityDB";
             File f = new File(destPath);
             if (!f.exists()) {
                 CopyDB( getBaseContext().getAssets().open("mydb"),
@@ -61,8 +53,10 @@ public class MainActivity extends ActionBarActivity {
 
         // Get the message from the intent
         db.open();
-        Cursor c = db.getAllRecords();
-        DisplayRecord(c);
+        //Cursor c = db.getAllRecords();
+        ArrayList <Activity>ActivityList = db.getAllRecords();
+        activityList = ActivityList;
+        DisplayRecord(activityList);
         db.close();
 
 
@@ -105,7 +99,7 @@ public class MainActivity extends ActionBarActivity {
     public void AddActivity(View view){
         Intent intent;
 
-            intent = new Intent(getBaseContext(), DisplayActivity.class);
+            intent = new Intent(getBaseContext(), AddActivity.class);
             startActivity(intent);
 
     }
@@ -120,19 +114,20 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    public void DisplayRecord(Cursor c)
+    public void DisplayRecord(ArrayList aList)
     {
 
-        Activities activities;
+        Activity activities;
         ListView lv = (ListView)findViewById(R.id.listView1);
-
+/*
         if(c.moveToFirst()){
             do{
 
-                activities = new Activities(c.getString(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4));
+                activities = new Activity(Long.valueOf(c.getString(0)),c.getString(1),c.getString(2),c.getString(3),c.getString(4));
                 activityList.add(activities);
             }while(c.moveToNext());
         }
+        }*/
         adapter = new ActivityListAdapter(activityList, MainActivity.this);
         lv.setAdapter(adapter);
         lv.setClickable(true);
@@ -140,7 +135,8 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getBaseContext(),UpdateActivity.class);
-                String activityId = activityList.get(position).getID();
+                String activityId = Long.toString(activityList.get(position).getID());
+                //String activityId = activityList.get(position).getID();
                 Log.i("DW", "Adding " + activityId + " to intent");
                 i.putExtra(ACTIVITY_ID, activityId);
                 startActivity(i);
