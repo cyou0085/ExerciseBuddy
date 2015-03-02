@@ -11,13 +11,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
-public class DisplayActivity extends ActionBarActivity {
+public class AddActivity extends ActionBarActivity {
 DBAdapterSleep db = new DBAdapterSleep(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display);
+        setContentView(R.layout.activity_add);
 
         Spinner dropdown = (Spinner)findViewById(R.id.ActivityName);
         String[] items = new String[]{"Sleep", "Work", "Workout","Class","Eating"};
@@ -29,15 +29,15 @@ DBAdapterSleep db = new DBAdapterSleep(this);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsWeek);
         dropdownWeek.setAdapter(adapter2);
 
-        Spinner dropdownAM = (Spinner)findViewById(R.id.spinner3);
+        Spinner dropdownAM = (Spinner)findViewById(R.id.amOrpm);
         String[] itemsTime = new String[]{"AM","PM"};
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsTime);
         dropdownAM.setAdapter(adapter3);
 
-        Spinner dropdownAM2 = (Spinner)findViewById(R.id.spinner4);
+        Spinner dropdownAM2 = (Spinner)findViewById(R.id.amOrpm2);
         //String[] itemsTime2 = new String[]{"AM","PM"};
-        //ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsTime);
-        dropdownAM2.setAdapter(adapter3);
+        ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsTime);
+        dropdownAM2.setAdapter(adapter4);
 
     }
 
@@ -63,17 +63,21 @@ DBAdapterSleep db = new DBAdapterSleep(this);
         EditText editText2;
         Spinner mySpinner;
         Spinner mySpinner2;
+        Spinner mySpinner3;
+        Spinner mySpinner4;
         String message;
         //Cursor c = db.getAllRecords();
 
-        intent = new Intent(this,DisplayActivity.class);
+        intent = new Intent(this,AddActivity.class);
         editText = (EditText) findViewById(R.id.startTime);
         editText2 = (EditText) findViewById(R.id.endTime);
         mySpinner = (Spinner) findViewById(R.id.ActivityName);
         mySpinner2 = (Spinner) findViewById(R.id.dayOfWeek);
+        mySpinner3 = (Spinner) findViewById(R.id.amOrpm);
+        mySpinner4 = (Spinner) findViewById(R.id.amOrpm2);
         //String Text = mySpinner.getSelectedItem().toString();
         db.open();
-        db.insertRecord(mySpinner.getSelectedItem().toString(),mySpinner2.getSelectedItem().toString(), editText.getText().toString(), editText2.getText().toString());
+        db.insertRecord(mySpinner.getSelectedItem().toString(),mySpinner2.getSelectedItem().toString(), editText.getText().toString(), editText2.getText().toString(),mySpinner3.getSelectedItem().toString(),mySpinner4.getSelectedItem().toString());
         db.close();
         editText.setText("");
         editText2.setText("");
