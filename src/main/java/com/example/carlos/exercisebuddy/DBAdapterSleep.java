@@ -25,13 +25,13 @@ public class DBAdapterSleep {
     //public static final String KEY_NOTES = "notes";
     private static final String TAG = "DBAdapterSleep";
 
-    private static final String DATABASE_NAME = "ActivityDB";
-    private static final String DATABASE_TABLE = "activity";
-    private static final int DATABASE_VERSION = 7;
+    private static final String DATABASE_NAME = "ExerciseBuddyDB";
+    private static final String DATABASE_TABLE = "ebactivity";
+    private static final int DATABASE_VERSION = 2;
 
     private static final String DATABASE_CREATE =
-            "create table if not exists " + DATABASE_TABLE + " (id integer primary key autoincrement, "
-                    + KEY_DAY + " VARCHAR not null," + KEY_ACTIVITY + " VARCHAR not null," + KEY_SLEEP + "VARCHAR," + KEY_WAKE + "VARCHAR," + KEY_START_AM + "VARCHAR," + KEY_END_AM + "VARCHAR)";
+            "CREATE TABLE " + DATABASE_TABLE + " (id integer primary key autoincrement, "
+                    + KEY_DAY + " VARCHAR not null," + KEY_ACTIVITY + " VARCHAR not null," + KEY_SLEEP + " VARCHAR," + KEY_WAKE + " VARCHAR," + KEY_START_AM + " VARCHAR," + KEY_END_AM + " VARCHAR)";
 
     private final Context context;
 
@@ -68,7 +68,7 @@ public class DBAdapterSleep {
         {
             Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
                     + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
+            db.execSQL("DROP TABLE" + DATABASE_TABLE);
             onCreate(db);
         }
     }
@@ -92,8 +92,8 @@ public class DBAdapterSleep {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_ACTIVITY,activity);
         initialValues.put(KEY_DAY,day);
-        initialValues.put(KEY_SLEEP, sleep);
-        initialValues.put(KEY_WAKE, awake);
+        initialValues.put(KEY_SLEEP,sleep);
+        initialValues.put(KEY_WAKE,awake);
         initialValues.put(KEY_START_AM,am1);
         initialValues.put(KEY_END_AM,am2);
         return db.insert(DATABASE_TABLE, null, initialValues);
@@ -109,8 +109,7 @@ public class DBAdapterSleep {
     public ArrayList<Activity> getAllRecords()
     {
         ArrayList<Activity> Activity_aList = new ArrayList<Activity>();
-        Cursor c = db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_ACTIVITY, KEY_DAY,
-                KEY_SLEEP, KEY_WAKE,KEY_START_AM,KEY_END_AM}, null, null, null, null,null);
+        Cursor c = db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_ACTIVITY, KEY_DAY,KEY_SLEEP, KEY_WAKE,KEY_START_AM,KEY_END_AM}, null, null, null, null,null);
         if(c != null){
             if(c.moveToFirst()){
                 do{
@@ -121,7 +120,7 @@ public class DBAdapterSleep {
                     Activities.setStart(c.getString(c.getColumnIndex(DBAdapterSleep.KEY_SLEEP)));
                     Activities.setEnd(c.getString(c.getColumnIndex(DBAdapterSleep.KEY_WAKE)));
                     Activities.setAm1(c.getString(c.getColumnIndex(DBAdapterSleep.KEY_START_AM)));
-                    Activities.setAm1(c.getString(c.getColumnIndex(DBAdapterSleep.KEY_END_AM)));
+                    Activities.setAm2(c.getString(c.getColumnIndex(DBAdapterSleep.KEY_END_AM)));
                 Activity_aList.add(Activities);
                 }while(c.moveToNext());
             }
