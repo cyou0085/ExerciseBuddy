@@ -35,8 +35,8 @@ DBAdapterSleep db = new DBAdapterSleep(this);
         dropdownAM.setAdapter(adapter3);
 
         Spinner dropdownAM2 = (Spinner)findViewById(R.id.amOrpm2);
-        //String[] itemsTime2 = new String[]{"AM","PM"};
-        ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsTime);
+        String[] itemsTime2 = new String[]{"AM","PM"};
+        ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsTime2);
         dropdownAM2.setAdapter(adapter4);
 
     }
