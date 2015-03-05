@@ -58,8 +58,8 @@
         android:layout_below="@+id/startTime"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/spinner3"
-        android:layout_toStartOf="@+id/spinner3" />
+        android:layout_toLeftOf="@+id/update"
+        android:layout_toStartOf="@+id/update" />
 
     <EditText
         android:layout_width="75dp"
@@ -69,7 +69,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/textView3"
-        android:layout_alignEnd="@+id/textView3" />
+        android:layout_alignEnd="@+id/textView3"
+        android:hint="@string/time" />
 
     <EditText
         android:layout_width="75dp"
@@ -79,40 +80,18 @@
         android:layout_below="@+id/textView4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/spinner4"
-        android:layout_alignEnd="@+id/spinner4" />
-
-    <Spinner
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner3"
-        android:layout_below="@+id/textView3"
-        android:spinnerMode="dropdown"
-        android:layout_toRightOf="@+id/startTime"
-        android:layout_alignBottom="@+id/startTime"
-        android:layout_toLeftOf="@+id/update"
-        android:layout_toStartOf="@+id/update" />
-
-    <Spinner
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner4"
-        android:spinnerMode="dropdown"
-        android:layout_toRightOf="@+id/startTime"
-        android:layout_alignTop="@+id/endTime"
-        android:layout_alignBottom="@+id/endTime"
-        android:layout_toLeftOf="@+id/update"
-        android:layout_toStartOf="@+id/update" />
+        android:layout_toLeftOf="@+id/update" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/update"
         android:id="@+id/update"
-        android:onClick="ChangeActivity"
+        android:onClick="UpdateActivity"
         android:layout_below="@+id/endTime"
         android:layout_toRightOf="@+id/startTime"
-        android:layout_toEndOf="@+id/startTime" />
+        android:layout_toEndOf="@+id/startTime"
+        android:layout_marginTop="43dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -124,4 +103,25 @@
         android:layout_toEndOf="@+id/update"
         android:onClick="ViewActivity" />
 
+    <Spinner
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/amOrpm"
+        android:layout_below="@+id/textView3"
+        android:spinnerMode="dropdown"
+        android:layout_toRightOf="@+id/startTime"
+        android:layout_alignBottom="@+id/startTime"
+        android:layout_toStartOf="@+id/viewButton"
+        android:layout_toLeftOf="@+id/viewButton" />
+
+    <Spinner
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/amOrpm2"
+        android:spinnerMode="dropdown"
+        android:layout_toRightOf="@+id/startTime"
+        android:layout_alignTop="@+id/endTime"
+        android:layout_toStartOf="@+id/viewButton"
+        android:layout_toLeftOf="@+id/viewButton"
+        android:layout_above="@+id/update" />
 </RelativeLayout>
