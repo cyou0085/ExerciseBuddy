@@ -32,84 +32,124 @@ public class UpdateActivity extends ActionBarActivity {
             db.open();
             updateActivity = db.getRecord(Long.valueOf(activityID));
             db.close();
-            Log.i("Carlos",updateActivity.getActivity());
-        }
-        else {
+            Log.i("Carlos", updateActivity.getActivity());
+        } else {
             Log.i("DW", "no good");
         }
 
 
         int activityName = 0;
 
-        Spinner dropdown = (Spinner)findViewById(R.id.ActivityName);
-        String[] items = new String[]{"Sleep", "Work", "Workout","Class","Eating"};
+        Spinner dropdown = (Spinner) findViewById(R.id.ActivityName);
+        String[] items = new String[]{"Sleep", "Work", "Workout", "Class", "Eating"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
-        switch (updateActivity.getActivity()){
+        switch (updateActivity.getActivity()) {
 
-            case "Sleep": activityName = 0;
+            case "Sleep":
+                activityName = 0;
                 break;
-            case "Work": activityName = 1;
+            case "Work":
+                activityName = 1;
                 break;
-            case "Workout": activityName = 2;
+            case "Workout":
+                activityName = 2;
                 break;
-            case "Class": activityName = 3;
+            case "Class":
+                activityName = 3;
                 break;
-            case "Eating": activityName = 4;
+            case "Eating":
+                activityName = 4;
                 break;
-            default: activityName = -1;
+            default:
+                activityName = -1;
         }
 
         dropdown.setSelection(activityName);
 
 
         int activityWeek = 0;
-        Spinner dropdownWeek = (Spinner)findViewById(R.id.dayOfWeek);
-        String[] itemsWeek = new String[]{"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsWeek);
+        Spinner dropdownWeek = (Spinner) findViewById(R.id.dayOfWeek);
+        String[] itemsWeek = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, itemsWeek);
         dropdownWeek.setAdapter(adapter2);
 //        String activityID = getIntent().getStringExtra(MainActivity.ACTIVITY_ID);
 //        dropdownWeek.setSelection(Integer.parseInt(passedvar));
 
 
-        switch (updateActivity.getDay()){
+        switch (updateActivity.getDay()) {
 
-            case "Sunday": activityWeek = 0;
+            case "Sunday":
+                activityWeek = 0;
                 break;
-            case "Monday": activityWeek = 1;
+            case "Monday":
+                activityWeek = 1;
                 break;
-            case "Tuesday": activityWeek = 2;
+            case "Tuesday":
+                activityWeek = 2;
                 break;
-            case "Wednesday": activityWeek = 3;
+            case "Wednesday":
+                activityWeek = 3;
                 break;
-            case "Thursday": activityWeek = 4;
+            case "Thursday":
+                activityWeek = 4;
                 break;
-            case "Friday": activityWeek = 5;
+            case "Friday":
+                activityWeek = 5;
                 break;
-            case "Saturday": activityWeek = 6;
+            case "Saturday":
+                activityWeek = 6;
                 break;
-            default: activityWeek = -1;
+            default:
+                activityWeek = -1;
         }
 
         dropdownWeek.setSelection(activityWeek);
 
-        EditText startText = (EditText)findViewById(R.id.startTime);
+        EditText startText = (EditText) findViewById(R.id.startTime);
         startText.setText(updateActivity.getStart());
-
-        Spinner dropdownAM = (Spinner)findViewById(R.id.amOrpm);
-        String[] itemsTime = new String[]{"AM","PM"};
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsTime);
+        int activityAM = 0;
+        Spinner dropdownAM = (Spinner) findViewById(R.id.amOrpm);
+        String[] itemsTime = new String[]{"AM", "PM"};
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, itemsTime);
         dropdownAM.setAdapter(adapter3);
+
+        switch(updateActivity.getStartAM()){
+        case "AM":
+            activityAM = 0;
+            break;
+        case "PM":
+            activityAM = 1;
+            break;
+        default:
+            activityAM = -1;
+        }
+
+        dropdownAM.setSelection(activityAM);
+
 
         EditText endText = (EditText)findViewById(R.id.endTime);
         endText.setText(updateActivity.getEnd());
-
+        int activityPM = 0;
         Spinner dropdownAM2 = (Spinner)findViewById(R.id.amOrpm2);
-        //String[] itemsTime2 = new String[]{"AM","PM"};
-        ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsTime);
+        String[] itemsTime2 = new String[]{"AM","PM"};
+        ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsTime2);
         dropdownAM2.setAdapter(adapter4);
 
 
+
+        switch(updateActivity.getEndAM()){
+            case "AM":
+                activityPM = 0;
+                break;
+            case "PM":
+                activityPM = 1;
+                break;
+            default:
+                activityPM = -1;
+        }
+
+        dropdownAM2.setSelection(activityPM);
     }
 
     @Override
@@ -144,7 +184,7 @@ public class UpdateActivity extends ActionBarActivity {
         mySpinner2 = (Spinner) findViewById(R.id.dayOfWeek);
         mySpinner3 = (Spinner) findViewById(R.id.amOrpm);
         mySpinner4 = (Spinner) findViewById(R.id.amOrpm2);
-        String Text = mySpinner.getSelectedItem().toString();
+
         db.open();
         db.updateRecord(Long.valueOf(activityID), mySpinner.getSelectedItem().toString(), mySpinner2.getSelectedItem().toString(), editText.getText().toString(), editText2.getText().toString(),mySpinner3.getSelectedItem().toString(),mySpinner4.getSelectedItem().toString());
         db.close();
