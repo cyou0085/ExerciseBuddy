@@ -101,7 +101,7 @@
         android:layout_alignBottom="@+id/update"
         android:layout_toRightOf="@+id/update"
         android:layout_toEndOf="@+id/update"
-        android:onClick="ViewActivity" />
+        android:onClick="DeleteActivity" />
 
     <Spinner
         android:layout_width="25dp"
