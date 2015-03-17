@@ -1,26 +1,18 @@
 package com.example.carlos.exercisebuddy;
 
-import android.app.ListActivity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class UpdateActivity extends ActionBarActivity {
-    DBAdapterSleep db = new DBAdapterSleep(this);
-
+    DBAdapterActivity db = new DBAdapterActivity(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -189,13 +181,19 @@ public class UpdateActivity extends ActionBarActivity {
         db.updateRecord(Long.valueOf(activityID), mySpinner.getSelectedItem().toString(), mySpinner2.getSelectedItem().toString(), editText.getText().toString(), editText2.getText().toString(),mySpinner3.getSelectedItem().toString(),mySpinner4.getSelectedItem().toString());
         db.close();
         startActivity(intent);
-        Toast.makeText(this, "Activity has been Updated", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "This activity has been updated", Toast.LENGTH_SHORT).show();
 
     }
-    public void ViewActivity(View view){
+
+    //Deletes the selected item
+    public void DeleteActivity(View view){
         Intent intent;
-        intent = new Intent(getBaseContext(), MainActivity.class);
+        intent = new Intent(getBaseContext(),MainActivity.class);
+        db.open();
+        db.deleteContact(Long.valueOf(getIntent().getStringExtra(MainActivity.ACTIVITY_ID)));
+        db.close();
         startActivity(intent);
+        Toast.makeText(this,"This activity has been deleted",Toast.LENGTH_SHORT).show();
 
     }
 
