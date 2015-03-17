@@ -5,6 +5,7 @@ package com.example.carlos.exercisebuddy;
  */
 public class Activity {
 
+    //Private Variable Members for Acitivty class
     private Long ID;
     private String activity;
     private String day;
@@ -13,6 +14,7 @@ public class Activity {
     private String am1;
     private String am2;
 
+    //Default Constructor sets everything to default values
     public Activity(){
         this.ID = 0L;
         this.activity = "Class";
@@ -23,6 +25,7 @@ public class Activity {
         this.am2 = "AM";
     }
 
+    //Assigns values to a new Activity Item
     public Activity(Long ID, String activity, String day, String start, String end, String am1, String am2){
         this.ID = ID;
         this.activity = activity;
@@ -33,7 +36,7 @@ public class Activity {
         this.am2 = am2;
 
     }
-
+    //accessor
     public Long getID() { return ID; }
 
     public String getActivity() {
@@ -56,6 +59,7 @@ public class Activity {
 
     public String getEndAM() { return am2;}
 
+    //Mutators
     public void setId(Long id) { this.ID = id; }
 
     public void setActivity(String activity) {
