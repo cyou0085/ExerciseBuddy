@@ -1,0 +1,78 @@
+package com.example.carlos.exercisebuddy;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+/**
+ * Created by dwalter on 3/12/15.
+ */
+public class WeekView extends View {
+
+DBAdapterActivity db = new DBAdapterActivity(getContext());
+
+    private Paint mPaint;
+    int mWidth;
+    int mHeight;
+    ArrayList<Activity> mActivities;
+    private TextView myText = null;
+
+    public WeekView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+        mActivities = new ArrayList<>();
+    }
+
+    //creates a paintobject
+    private void init() {
+        mPaint = new Paint(0);
+        mPaint.setColor(0xff101010);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setAntiAlias(true);
+        mPaint.setStrokeWidth(3.0f);
+        //mPaint.setMaskFilter(new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL));
+
+    }
+
+    //Store Activity Items Within the the ArrayList
+    public void addNewActivity() {
+
+        mActivities.add(db.getRecord(0));
+      //  Log.i("CJY",mActivities.get(0).getActivity());
+
+    }
+
+    //Draw a Board that is split itwo 3 Columns(Morning,Afternoon,Night) and 7 Rows(WeekDays)
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        //addNewActivity();
+        // Draw the day dividing lines
+        canvas.drawRect(new RectF(0, 0, mWidth, mHeight), mPaint);
+        for (int i = 0; i < 7; i++) {
+            canvas.drawLine(0, i * mHeight/7, mWidth, i * mHeight/7, mPaint);
+        }
+
+        for (Activity a : mActivities) {
+        }
+        for(int i = 1; i <= 3; i++){
+            canvas.drawLine(i*mWidth/3,0,i*mWidth/3,mHeight,mPaint);
+
+
+        }
+       // canvas.drawText(mActivities.get(0).getActivity(),2f,2f,mPaint);
+
+    }
+
+    protected void onSizeChanged (int w, int h, int oldw, int oldh) {
+        mWidth = w;
+        mHeight = h;
+
+    }
+}
