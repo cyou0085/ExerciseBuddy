@@ -16,7 +16,7 @@ public class ActivityListAdapter extends BaseAdapter {
     private ArrayList<Activity> activityList = new ArrayList<Activity>();
     private LayoutInflater inflater;
 
-
+//Passes an activity list to an adapter to inflate the List
     public ActivityListAdapter(ArrayList<Activity> activityList, Context context){
         this.activityList = activityList;
         this.inflater = inflater.from(context);
@@ -29,11 +29,13 @@ public class ActivityListAdapter extends BaseAdapter {
     }
 
     @Override
+    //override method that set the View and all elements in the xml file to local variables
     public View getView(int position, View view, ViewGroup parent) {
         Activity activities = activityList.get(position);
 
         view = inflater.inflate(R.layout.activity_item_layout,null);
-        //Button update = (Button)view.findViewById(R.id.updateButton);
+
+        //Assigns TextViews so the ArrayAdapter can be displayed
         TextView tvActivity = (TextView) view.findViewById(R.id.tvActivity);
         TextView tvDay = (TextView) view.findViewById(R.id.tvDay);
         TextView tvStart = (TextView) view.findViewById(R.id.tvStart);
@@ -41,17 +43,14 @@ public class ActivityListAdapter extends BaseAdapter {
         TextView tvAm1 = (TextView) view.findViewById(R.id.tvAmOrPm);
         TextView tvAm2 = (TextView) view.findViewById(R.id.tvAmOrPm2);
 
-       // TextView tvID = (TextView) view.findViewById(R.id.tvID);
-
+        //Set these Textviews with the Proper String Value
         tvActivity.setText(activities.getActivity());
         tvDay.setText(activities.getDay());
         tvStart.setText(activities.getStart());
         tvEnd.setText(activities.getEnd());
         tvAm1.setText(activities.getStartAM());
         tvAm2.setText(activities.getEndAM());
-       // tvID.setText(Long.toString(activities.getID()));
-        //tvRecordId.setText(activities.getId());
-        //tvRecordId.setVisibility(View.INVISIBLE);
+
         return view;
     }
 
