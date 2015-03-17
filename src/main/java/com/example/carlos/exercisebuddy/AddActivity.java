@@ -12,13 +12,14 @@ import android.widget.Toast;
 
 
 public class AddActivity extends ActionBarActivity {
-DBAdapterSleep db = new DBAdapterSleep(this);
+DBAdapterActivity db = new DBAdapterActivity(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-
+        //Creates Spinner for Activity Name,Week Day,AM/PM for Start
+        //and a AM/PM for Stop time(dropdownAM2)
         Spinner dropdown = (Spinner)findViewById(R.id.ActivityName);
         String[] items = new String[]{"Sleep", "Work", "Workout","Class","Eating"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -57,32 +58,33 @@ DBAdapterSleep db = new DBAdapterSleep(this);
     }
 
     public void AddActivity(View view) {
-        //Checks id to determine which button was clicked
+        //Create Local Variables to store new db values
         Intent intent;
         EditText editText;
         EditText editText2;
-        Spinner mySpinner;
-        Spinner mySpinner2;
-        Spinner mySpinner3;
-        Spinner mySpinner4;
-        String message;
-        //Cursor c = db.getAllRecords();
+        Spinner spinnerActivity;
+        Spinner spinnerWeekDay;
+        Spinner spinnerAMorPMStart;
+        Spinner spinnerAMorPMEnd;
 
-        intent = new Intent(this,AddActivity.class);
+        //assign them to the corresponding xml element
+        intent = new Intent(this,MainActivity.class);
         editText = (EditText) findViewById(R.id.startTime);
         editText2 = (EditText) findViewById(R.id.endTime);
-        mySpinner = (Spinner) findViewById(R.id.ActivityName);
-        mySpinner2 = (Spinner) findViewById(R.id.dayOfWeek);
-        mySpinner3 = (Spinner) findViewById(R.id.amOrpm);
-        mySpinner4 = (Spinner) findViewById(R.id.amOrpm2);
-        //String Text = mySpinner.getSelectedItem().toString();
+        spinnerActivity = (Spinner) findViewById(R.id.ActivityName);
+        spinnerWeekDay = (Spinner) findViewById(R.id.dayOfWeek);
+        spinnerAMorPMStart = (Spinner) findViewById(R.id.amOrpm);
+        spinnerAMorPMEnd = (Spinner) findViewById(R.id.amOrpm2);
+
+        //Opens db and inserts values into the table
         db.open();
-        db.insertRecord(mySpinner.getSelectedItem().toString(),mySpinner2.getSelectedItem().toString(), editText.getText().toString(), editText2.getText().toString(),mySpinner3.getSelectedItem().toString(),mySpinner4.getSelectedItem().toString());
+        db.insertRecord(spinnerActivity.getSelectedItem().toString(), spinnerWeekDay.getSelectedItem().toString(), editText.getText().toString(), editText2.getText().toString(), spinnerAMorPMStart.getSelectedItem().toString(), spinnerAMorPMEnd.getSelectedItem().toString());
         db.close();
+        //Once inserted set elements back to blank and create a TOAST
         editText.setText("");
         editText2.setText("");
-        Toast.makeText(this, "Activity has been Added", Toast.LENGTH_LONG).show();
         startActivity(intent);
+        Toast.makeText(this, "Your activity has been added", Toast.LENGTH_SHORT).show();
 
     }
 
