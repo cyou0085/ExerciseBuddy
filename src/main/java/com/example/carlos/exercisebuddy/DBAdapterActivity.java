@@ -7,14 +7,15 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import com.example.carlos.exercisebuddy.Activity;
 
 import java.util.ArrayList;
 
 /**
  * Created by carlosyoung on 2/3/15.
  */
-public class DBAdapterSleep {
+public class DBAdapterActivity {
+
+    //Column Names In DB
     public static final String KEY_ROWID = "id";
     public static final String KEY_ACTIVITY = "activity";
     public static final String KEY_DAY = "day";
@@ -22,13 +23,13 @@ public class DBAdapterSleep {
     public static final String KEY_WAKE = "wake";
     public static final String KEY_START_AM = "am1";
     public static final String KEY_END_AM = "am2";
-    //public static final String KEY_NOTES = "notes";
-    private static final String TAG = "DBAdapterSleep";
-
+    private static final String TAG = "DBAdapterActivity";
+    //Table Name and version
     private static final String DATABASE_NAME = "ExerciseBuddyDB";
     private static final String DATABASE_TABLE = "ebactivity";
     private static final int DATABASE_VERSION = 2;
 
+    //Creates Table
     private static final String DATABASE_CREATE =
             "CREATE TABLE " + DATABASE_TABLE + " (id integer primary key autoincrement, "
                     + KEY_DAY + " VARCHAR not null," + KEY_ACTIVITY + " VARCHAR not null," + KEY_SLEEP + " VARCHAR," + KEY_WAKE + " VARCHAR," + KEY_START_AM + " VARCHAR," + KEY_END_AM + " VARCHAR)";
@@ -38,11 +39,13 @@ public class DBAdapterSleep {
     private DatabaseHelper DBHelper;
     private SQLiteDatabase db;
 
-    public DBAdapterSleep(Context ctx)
+    public DBAdapterActivity(Context ctx)
     {
         this.context = ctx;
         DBHelper = new DatabaseHelper(context);
     }
+
+
 
     private static class DatabaseHelper extends SQLiteOpenHelper
     {
@@ -64,6 +67,7 @@ public class DBAdapterSleep {
         }
 
         @Override
+        //Deletes Old Table and upgrades to a higher version
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {
             Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
@@ -74,7 +78,7 @@ public class DBAdapterSleep {
     }
 
     //---opens the database---
-    public DBAdapterSleep open() throws SQLException
+    public DBAdapterActivity open() throws SQLException
     {
         db = DBHelper.getWritableDatabase();
         return this;
@@ -114,13 +118,13 @@ public class DBAdapterSleep {
             if(c.moveToFirst()){
                 do{
                     Activity Activities = new Activity();
-                    Activities.setId(c.getLong(c.getColumnIndex(DBAdapterSleep.KEY_ROWID)));
-                    Activities.setActivity(c.getString(c.getColumnIndex(DBAdapterSleep.KEY_ACTIVITY)));
-                    Activities.setDay(c.getString(c.getColumnIndex(DBAdapterSleep.KEY_DAY)));
-                    Activities.setStart(c.getString(c.getColumnIndex(DBAdapterSleep.KEY_SLEEP)));
-                    Activities.setEnd(c.getString(c.getColumnIndex(DBAdapterSleep.KEY_WAKE)));
-                    Activities.setAm1(c.getString(c.getColumnIndex(DBAdapterSleep.KEY_START_AM)));
-                    Activities.setAm2(c.getString(c.getColumnIndex(DBAdapterSleep.KEY_END_AM)));
+                    Activities.setId(c.getLong(c.getColumnIndex(DBAdapterActivity.KEY_ROWID)));
+                    Activities.setActivity(c.getString(c.getColumnIndex(DBAdapterActivity.KEY_ACTIVITY)));
+                    Activities.setDay(c.getString(c.getColumnIndex(DBAdapterActivity.KEY_DAY)));
+                    Activities.setStart(c.getString(c.getColumnIndex(DBAdapterActivity.KEY_SLEEP)));
+                    Activities.setEnd(c.getString(c.getColumnIndex(DBAdapterActivity.KEY_WAKE)));
+                    Activities.setAm1(c.getString(c.getColumnIndex(DBAdapterActivity.KEY_START_AM)));
+                    Activities.setAm2(c.getString(c.getColumnIndex(DBAdapterActivity.KEY_END_AM)));
                 Activity_aList.add(Activities);
                 }while(c.moveToNext());
             }
@@ -141,13 +145,13 @@ public class DBAdapterSleep {
             mCursor.moveToFirst();
         }
 
-        indexActivity.setId(mCursor.getLong(mCursor.getColumnIndex(DBAdapterSleep.KEY_ROWID)));
-        indexActivity.setActivity(mCursor.getString(mCursor.getColumnIndex(DBAdapterSleep.KEY_ACTIVITY)));
-        indexActivity.setDay(mCursor.getString(mCursor.getColumnIndex(DBAdapterSleep.KEY_DAY)));
-        indexActivity.setStart(mCursor.getString(mCursor.getColumnIndex(DBAdapterSleep.KEY_SLEEP)));
-        indexActivity.setEnd(mCursor.getString(mCursor.getColumnIndex(DBAdapterSleep.KEY_WAKE)));
-        indexActivity.setAm1(mCursor.getString(mCursor.getColumnIndex(DBAdapterSleep.KEY_START_AM)));
-        indexActivity.setAm2(mCursor.getString(mCursor.getColumnIndex(DBAdapterSleep.KEY_END_AM)));
+        indexActivity.setId(mCursor.getLong(mCursor.getColumnIndex(DBAdapterActivity.KEY_ROWID)));
+        indexActivity.setActivity(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_ACTIVITY)));
+        indexActivity.setDay(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_DAY)));
+        indexActivity.setStart(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_SLEEP)));
+        indexActivity.setEnd(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_WAKE)));
+        indexActivity.setAm1(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_START_AM)));
+        indexActivity.setAm2(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_END_AM)));
 
         return indexActivity;
     }
