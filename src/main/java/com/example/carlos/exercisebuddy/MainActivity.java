@@ -60,6 +60,10 @@ public class MainActivity extends ActionBarActivity {
         FindRecord();
         db.close();
 
+        // Populate the WeekView's activities with the items that were in the
+        // database upon application startup.
+        WeekView wv = (WeekView) findViewById(R.id.view2);
+        wv.addActivities(activityList);
     }
 
 
