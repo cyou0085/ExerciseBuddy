@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,6 +19,11 @@ public class WeekView extends View {
 DBAdapterActivity db = new DBAdapterActivity(getContext());
 
     private Paint mPaint;
+    private Paint mActivityPaint;
+    private Paint mActivityPaintBlue;
+    private Paint mActivityPaintYellow;
+    private Paint mActivityPaintGreen;
+    private Paint mActivityPaintOrange;
     int mWidth;
     int mHeight;
     ArrayList<Activity> mActivities;
@@ -26,47 +32,112 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
     public WeekView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
-        mActivities = new ArrayList<>();
+        mActivities = new ArrayList<Activity>();
     }
 
-    //creates a paintobject
+    //creates the Paint objects that will be used whenever the onDraw method is called.
+    // They are constructed here for performance reasons to prevent unnecessarily
+    // creating instances of these objects every time onDraw is called.
     private void init() {
         mPaint = new Paint(0);
         mPaint.setColor(0xff101010);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setAntiAlias(true);
         mPaint.setStrokeWidth(3.0f);
+        mActivityPaint = new Paint(0);
+        mActivityPaint.setColor(0xffff0000);
+        mActivityPaint.setAntiAlias(true);
+        mActivityPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        mActivityPaintYellow = new Paint(0);
+        mActivityPaintYellow.setColor(0xffffff33);
+        mActivityPaintYellow.setAntiAlias(true);
+        mActivityPaintYellow.setStyle(Paint.Style.FILL_AND_STROKE);
+        mActivityPaintBlue = new Paint(0);
+        mActivityPaintBlue.setColor(0xff0000ff);
+        mActivityPaintBlue.setAntiAlias(true);
+        mActivityPaintBlue.setStyle(Paint.Style.FILL_AND_STROKE);
+        mActivityPaintGreen = new Paint(0);
+        mActivityPaintGreen.setColor(0xff00ff00);
+        mActivityPaintGreen.setAntiAlias(true);
+        mActivityPaintGreen.setStyle(Paint.Style.FILL_AND_STROKE);
+        mActivityPaintOrange = new Paint(0);
+        mActivityPaintOrange.setColor(0xff333300);
+        mActivityPaintOrange.setAntiAlias(true);
+        mActivityPaintOrange.setStyle(Paint.Style.FILL_AND_STROKE);
+
+
         //mPaint.setMaskFilter(new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL));
 
     }
 
     //Store Activity Items Within the the ArrayList
-    public void addNewActivity() {
-
-        mActivities.add(db.getRecord(0));
-      //  Log.i("CJY",mActivities.get(0).getActivity());
-
+    public void addNewActivity(Activity a) {
+        mActivities.add(a);
     }
 
-    //Draw a Board that is split itwo 3 Columns(Morning,Afternoon,Night) and 7 Rows(WeekDays)
+    public void addActivities(ArrayList<Activity> activities) {
+        mActivities.addAll(activities);
+    }
+
+    //Draw a Board that is split into 3 Columns(Morning,Afternoon,Night) and 7 Rows(WeekDays)
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        //addNewActivity();
+        float hourWidth = mWidth/24.0f;
+
         // Draw the day dividing lines
         canvas.drawRect(new RectF(0, 0, mWidth, mHeight), mPaint);
         for (int i = 0; i < 7; i++) {
             canvas.drawLine(0, i * mHeight/7, mWidth, i * mHeight/7, mPaint);
         }
 
-        for (Activity a : mActivities) {
-        }
         for(int i = 1; i <= 3; i++){
             canvas.drawLine(i*mWidth/3,0,i*mWidth/3,mHeight,mPaint);
+        }
 
+        //loops through all activites creating a Rectangle
+        //on the corresponding day
+        for (Activity a : mActivities) {
+            Log.i("WeekView", "Drawing activity: " + a);
+            RectF r = new RectF();
+            switch (a.getDay()){
+                case "Sunday": r = new RectF(hourWidth*a.getStartTime(), 0, hourWidth*a.getEndTime(), mHeight/7);
+                    break;
+                case "Monday": r = new RectF(hourWidth*a.getStartTime(), mHeight/7, hourWidth*a.getEndTime(), 2*mHeight/7);
+                    break;
+                case "Tuesday": r = new RectF(hourWidth*a.getStartTime(), 2*mHeight/7, hourWidth*a.getEndTime(), 3*mHeight/7);
+                    break;
+                case "Wednesday": r = new RectF(hourWidth*a.getStartTime(), 3*mHeight/7, hourWidth*a.getEndTime(), 4*mHeight/7);
+                    break;
+                case "Thursday": r = new RectF(hourWidth*a.getStartTime(), 4*mHeight/7, hourWidth*a.getEndTime(), 5*mHeight/7);
+                    break;
+                case "Friday": r = new RectF(hourWidth*a.getStartTime(), 5*mHeight/7, hourWidth*a.getEndTime(), 6*mHeight/7);
+                    break;
+                case "Saturday": r = new RectF(hourWidth*a.getStartTime(), 6*mHeight/7, hourWidth*a.getEndTime(), 7*mHeight/7);
+                default:
+                    canvas.drawRect(r,mActivityPaint);
+            }
+
+
+            Log.i("WeekView", "  Corresponding " + r);
+            //Creates the block on the canvas with the appropriate
+            //color corresponding to the activity thats being done
+            switch (a.getActivity()){
+                case "Sleep": canvas.drawRect(r,mActivityPaintYellow);
+                    break;
+                case "Work": canvas.drawRect(r,mActivityPaintGreen);
+                    break;
+                case "Workout": canvas.drawRect(r,mActivityPaintBlue);
+                    break;
+                case "Class": canvas.drawRect(r,mActivityPaint);
+                    break;
+                case "Eating": canvas.drawRect(r,mActivityPaintOrange);
+            default:
+                canvas.drawRect(r,mActivityPaint);
+            }
 
         }
-       // canvas.drawText(mActivities.get(0).getActivity(),2f,2f,mPaint);
+
 
     }
 
