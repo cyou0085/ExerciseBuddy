@@ -3,11 +3,13 @@ package com.example.carlos.exercisebuddy;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 
@@ -18,6 +20,7 @@ DBAdapterActivity db = new DBAdapterActivity(this);
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
         //Creates Spinner for Activity Name,Week Day,AM/PM for Start
         //and a AM/PM for Stop time(dropdownAM2)
         Spinner dropdown = (Spinner)findViewById(R.id.ActivityName);
@@ -29,7 +32,7 @@ DBAdapterActivity db = new DBAdapterActivity(this);
         String[] itemsWeek = new String[]{"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsWeek);
         dropdownWeek.setAdapter(adapter2);
-
+/*
         Spinner dropdownAM = (Spinner)findViewById(R.id.amOrpm);
         String[] itemsTime = new String[]{"AM","PM"};
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsTime);
@@ -38,7 +41,7 @@ DBAdapterActivity db = new DBAdapterActivity(this);
         Spinner dropdownAM2 = (Spinner)findViewById(R.id.amOrpm2);
         String[] itemsTime2 = new String[]{"AM","PM"};
         ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsTime2);
-        dropdownAM2.setAdapter(adapter4);
+        dropdownAM2.setAdapter(adapter4);*/
 
     }
 
@@ -60,29 +63,62 @@ DBAdapterActivity db = new DBAdapterActivity(this);
     public void AddActivity(View view) {
         //Create Local Variables to store new db values
         Intent intent;
-        EditText editText;
-        EditText editText2;
+        //EditText editText;
+        //EditText editText2;
         Spinner spinnerActivity;
         Spinner spinnerWeekDay;
-        Spinner spinnerAMorPMStart;
-        Spinner spinnerAMorPMEnd;
-
+        //Spinner spinnerAMorPMStart;
+        //Spinner spinnerAMorPMEnd;
+        TimePicker tpStart;
+        TimePicker tpEnd;
+        Boolean startAM=false;
+        Boolean endAM=false;
         //assign them to the corresponding xml element
         intent = new Intent(this,MainActivity.class);
-        editText = (EditText) findViewById(R.id.startTime);
-        editText2 = (EditText) findViewById(R.id.endTime);
+        //editText = (EditText) findViewById(R.id.startTime);
+        //editText2 = (EditText) findViewById(R.id.endTime);
         spinnerActivity = (Spinner) findViewById(R.id.ActivityName);
         spinnerWeekDay = (Spinner) findViewById(R.id.dayOfWeek);
-        spinnerAMorPMStart = (Spinner) findViewById(R.id.amOrpm);
-        spinnerAMorPMEnd = (Spinner) findViewById(R.id.amOrpm2);
+        tpStart = (TimePicker) findViewById(R.id.timePickerStart);
+        tpStart.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                Toast.makeText(getApplicationContext(),"Time is " + hourOfDay +":"+minute,Toast.LENGTH_SHORT).show();
 
+            }
+
+        });
+        Log.i("getCurrentAMorPM", String.valueOf(startAM));
+
+        if(tpStart.getCurrentHour() < 12)
+            startAM = true;
+
+        Log.i("getCurrentAMorPM", String.valueOf(startAM));
+
+
+
+        tpEnd = (TimePicker) findViewById(R.id.timePickerEnd);
+        tpEnd.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                Toast.makeText(getApplicationContext(),"Time is " + hourOfDay +":"+minute,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if(tpEnd.getCurrentHour() < 12)
+            endAM = true;
+
+        //spinnerAMorPMStart = (Spinner) findViewById(R.id.amOrpm);
+        //spinnerAMorPMEnd = (Spinner) findViewById(R.id.amOrpm2);
+        //tpStart.getCurrentHour();
+        //tpEnd.getCurrentHour();
         //Opens db and inserts values into the table
+
         db.open();
-        db.insertRecord(spinnerActivity.getSelectedItem().toString(), spinnerWeekDay.getSelectedItem().toString(), editText.getText().toString(), editText2.getText().toString(), spinnerAMorPMStart.getSelectedItem().toString(), spinnerAMorPMEnd.getSelectedItem().toString());
+        Log.i("AddingActivity",spinnerActivity.getSelectedItem().toString() + " on " + spinnerWeekDay.getSelectedItem().toString() + " from " + tpStart.getCurrentHour() + ":" + tpStart.getCurrentMinute() + startAM);
+
+        db.insertRecord(spinnerActivity.getSelectedItem().toString(), spinnerWeekDay.getSelectedItem().toString(),tpStart.getCurrentHour(),tpStart.getCurrentMinute(),tpEnd.getCurrentHour(),tpEnd.getCurrentMinute(),startAM,endAM);
         db.close();
-        //Once inserted set elements back to blank and create a TOAST
-        editText.setText("");
-        editText2.setText("");
         startActivity(intent);
         Toast.makeText(this, "Your activity has been added", Toast.LENGTH_SHORT).show();
 
