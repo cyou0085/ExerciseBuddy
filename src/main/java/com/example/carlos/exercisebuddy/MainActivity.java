@@ -2,6 +2,7 @@ package com.example.carlos.exercisebuddy;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.graphics.RectF;
 import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 public class MainActivity extends ActionBarActivity {
     ActivityListAdapter adapter;
     ArrayList<Activity> activityList = new ArrayList <Activity>();
+    RectF rect =  new RectF();
+
     public final static String ACTIVITY_ID = "com.example.carlos.exercisebuddy.MainActivity.tvID";
 
 
@@ -58,6 +61,7 @@ public class MainActivity extends ActionBarActivity {
         ArrayList <Activity>ActivityList = db.getAllRecords();
         activityList = ActivityList;
         FindRecord();
+        FindRecordView();
         db.close();
 
         // Populate the WeekView's activities with the items that were in the
@@ -139,6 +143,34 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+
+    public void FindRecordView()
+    {
+        final WeekView lv = (WeekView)findViewById(R.id.view2);
+        lv.addActivities(activityList);
+        rect = lv.mActivityRegions.get(1);
+        adapter = new ActivityListAdapter(activityList, MainActivity.this);
+
+        lv.setClickable(true);
+        lv.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(),UpdateActivity.class);
+
+                for(int i = 0; i <= lv.mActivityRegions.size();i++) {
+                    if (lv.mActivityRegions.get(i).equals(v))
+                        startActivity(intent);
+                }
+
+                Log.i("Carlos", "You Clicked " + activityList.get(1).getActivity() + " at zero");
+
+                Log.i("Carlos", "You Clicked " + lv.mActivityRegions.get(1) + " at zero");
+
+
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
