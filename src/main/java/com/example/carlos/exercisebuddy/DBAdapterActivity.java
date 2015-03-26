@@ -19,20 +19,25 @@ public class DBAdapterActivity {
     public static final String KEY_ROWID = "id";
     public static final String KEY_ACTIVITY = "activity";
     public static final String KEY_DAY = "day";
-    public static final String KEY_SLEEP = "sleep";
-    public static final String KEY_WAKE = "wake";
-    public static final String KEY_START_AM = "am1";
-    public static final String KEY_END_AM = "am2";
+    public static final String KEY_STARTH = "startH";
+    public static final String KEY_STARTM = "startM";
+    public static final String KEY_ENDH = "endH";
+    public static final String KEY_ENDM = "endM";
+    public static final String KEY_START_AM = "startAMorPM";
+    public static final String KEY_END_AM = "endAMorPM";
     private static final String TAG = "DBAdapterActivity";
     //Table Name and version
-    private static final String DATABASE_NAME = "ExerciseBuddyDB";
-    private static final String DATABASE_TABLE = "ebactivity";
-    private static final int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "myExerciseBuddy";
+    private static final String DATABASE_TABLE = "myactivity";
+    private static final int DATABASE_VERSION = 1;
 
     //Creates Table
+    /*private static final String DATABASE_CREATE =
+            "CREATE TABLE " + DATABASE_TABLE + " (id integer primary key autoincrement, "
+                    + KEY_DAY + " VARCHAR not null," + KEY_ACTIVITY + " VARCHAR not null," + KEY_SLEEP + " VARCHAR," + KEY_WAKE + " VARCHAR," + KEY_START_AM + " VARCHAR," + KEY_END_AM + " VARCHAR)";*/
     private static final String DATABASE_CREATE =
             "CREATE TABLE " + DATABASE_TABLE + " (id integer primary key autoincrement, "
-                    + KEY_DAY + " VARCHAR not null," + KEY_ACTIVITY + " VARCHAR not null," + KEY_SLEEP + " VARCHAR," + KEY_WAKE + " VARCHAR," + KEY_START_AM + " VARCHAR," + KEY_END_AM + " VARCHAR)";
+                    + KEY_DAY + " VARCHAR not null," + KEY_ACTIVITY + " VARCHAR not null," + KEY_STARTH + " INTEGER," + KEY_STARTM + " INTEGER,"+ KEY_ENDH + " INTEGER," + KEY_ENDM + " INTEGER," + KEY_START_AM + " BOOLEAN," + KEY_END_AM + " BOOLEAN)";
 
     private final Context context;
 
@@ -91,7 +96,7 @@ public class DBAdapterActivity {
     }
 
     //---insert a record into the database---
-    public long insertRecord(String activity, String day, String sleep, String awake,String am1, String am2)
+   /* public long insertRecord(String activity, String day, String sleep, String awake,String am1, String am2)
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_ACTIVITY,activity);
@@ -100,6 +105,19 @@ public class DBAdapterActivity {
         initialValues.put(KEY_WAKE,awake);
         initialValues.put(KEY_START_AM,am1);
         initialValues.put(KEY_END_AM,am2);
+        return db.insert(DATABASE_TABLE, null, initialValues);
+    }*/
+    public long insertRecord(String activity, String day,int startH, int startM, int endH, int endM,boolean startAM,boolean endAM)
+    {
+        ContentValues initialValues = new ContentValues();
+        initialValues.put(KEY_ACTIVITY,activity);
+        initialValues.put(KEY_DAY,day);
+        initialValues.put(KEY_STARTH,startH);
+        initialValues.put(KEY_STARTM,startM);
+        initialValues.put(KEY_ENDH,endH);
+        initialValues.put(KEY_ENDM,endM);
+        initialValues.put(KEY_START_AM,startAM);
+        initialValues.put(KEY_END_AM,endAM);
         return db.insert(DATABASE_TABLE, null, initialValues);
     }
 
@@ -112,6 +130,27 @@ public class DBAdapterActivity {
     //---retrieves all the records---
     public ArrayList<Activity> getAllRecords()
     {
+        ArrayList<Activity> Activity_aList = new ArrayList<Activity>();
+        Cursor c = db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_ACTIVITY, KEY_DAY,KEY_STARTH,KEY_STARTM,KEY_ENDH,KEY_ENDM,KEY_START_AM,KEY_END_AM}, null, null, null, null,null);
+        if(c != null){
+            if(c.moveToFirst()){
+                do{
+
+                    Activity Activities = new Activity();
+                    Activities.setId(c.getLong(c.getColumnIndex(DBAdapterActivity.KEY_ROWID)));
+                    Activities.setActivity(c.getString(c.getColumnIndex(DBAdapterActivity.KEY_ACTIVITY)));
+                    Activities.setDayOfWeek(c.getString(c.getColumnIndex(DBAdapterActivity.KEY_DAY)));
+                    Activities.setStartHour(c.getInt(c.getColumnIndex(DBAdapterActivity.KEY_STARTH)));
+                    Activities.setStartMinute(c.getInt(c.getColumnIndex(DBAdapterActivity.KEY_STARTM)));
+                    Activities.setEndHour(c.getInt(c.getColumnIndex(DBAdapterActivity.KEY_ENDH)));
+                    Activities.setEndMinute(c.getInt(c.getColumnIndex(DBAdapterActivity.KEY_ENDM)));
+                    Activities.setStartAMorPM(Boolean.parseBoolean(c.getString(c.getColumnIndex(DBAdapterActivity.KEY_START_AM))));
+                    Activities.setEndAMorPM(Boolean.parseBoolean(c.getString(c.getColumnIndex(DBAdapterActivity.KEY_END_AM))));
+                    Activity_aList.add(Activities);
+                }while(c.moveToNext());
+            }
+        }
+        return Activity_aList;/*
         ArrayList<Activity> Activity_aList = new ArrayList<Activity>();
         Cursor c = db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_ACTIVITY, KEY_DAY,KEY_SLEEP, KEY_WAKE,KEY_START_AM,KEY_END_AM}, null, null, null, null,null);
         if(c != null){
@@ -129,7 +168,7 @@ public class DBAdapterActivity {
                 }while(c.moveToNext());
             }
         }
-        return Activity_aList;
+        return Activity_aList;*/
     }
 
     //---retrieves a particular record---
@@ -139,7 +178,7 @@ public class DBAdapterActivity {
 
         Cursor mCursor =
                 db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID, KEY_ACTIVITY,
-                                KEY_DAY, KEY_SLEEP, KEY_WAKE,KEY_START_AM,KEY_END_AM},
+                                KEY_DAY, KEY_STARTH,KEY_STARTM,KEY_ENDH,KEY_ENDM,KEY_START_AM,KEY_END_AM},
                         KEY_ROWID + "=" + rowId, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -147,17 +186,19 @@ public class DBAdapterActivity {
 
         indexActivity.setId(mCursor.getLong(mCursor.getColumnIndex(DBAdapterActivity.KEY_ROWID)));
         indexActivity.setActivity(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_ACTIVITY)));
-        indexActivity.setDay(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_DAY)));
-        indexActivity.setStart(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_SLEEP)));
-        indexActivity.setEnd(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_WAKE)));
-        indexActivity.setAm1(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_START_AM)));
-        indexActivity.setAm2(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_END_AM)));
+        indexActivity.setDayOfWeek(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_DAY)));
+        indexActivity.setStartHour(mCursor.getInt(mCursor.getColumnIndex(DBAdapterActivity.KEY_STARTH)));
+        indexActivity.setStartMinute(mCursor.getInt(mCursor.getColumnIndex(DBAdapterActivity.KEY_STARTM)));
+        indexActivity.setEndHour(mCursor.getInt(mCursor.getColumnIndex(DBAdapterActivity.KEY_ENDH)));
+        indexActivity.setEndMinute(mCursor.getInt(mCursor.getColumnIndex(DBAdapterActivity.KEY_ENDM)));
+        indexActivity.setStartAMorPM(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_START_AM))));
+        indexActivity.setEndAMorPM(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_END_AM))));
 
         return indexActivity;
     }
 
     //---updates a record---
-    public boolean updateRecord(long rowId, String activity,String day, String sleep, String awake,String am1, String am2)
+    /*public boolean updateRecord(long rowId, String activity,String day, String sleep, String awake,String am1, String am2)
     {
         ContentValues args = new ContentValues();
         args.put(KEY_ROWID,rowId);
@@ -168,6 +209,18 @@ public class DBAdapterActivity {
         args.put(KEY_START_AM,am1);
         args.put(KEY_END_AM,am2);
         return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
+    }*/
+    public boolean updateRecord(long rowId, String activity,String day,int startH, int startM, int endH, int endM,boolean startAM,boolean endAM)
+    {
+        ContentValues args = new ContentValues();
+        args.put(KEY_ACTIVITY, activity);
+        args.put(KEY_DAY, day);
+        args.put(KEY_STARTH, startH);
+        args.put(KEY_STARTM, startM);
+        args.put(KEY_ENDH, endH);
+        args.put(KEY_ENDM, endM);
+        args.put(KEY_START_AM, startAM);
+        args.put(KEY_END_AM, endAM);
+        return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
     }
-
 }
