@@ -3,6 +3,7 @@ package com.example.carlos.exercisebuddy;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,14 +43,27 @@ public class ActivityListAdapter extends BaseAdapter {
         TextView tvEnd = (TextView) view.findViewById(R.id.tvEnd);
         TextView tvAm1 = (TextView) view.findViewById(R.id.tvAmOrPm);
         TextView tvAm2 = (TextView) view.findViewById(R.id.tvAmOrPm2);
+        if(activities.getStartHour() < 12)
+            activities.setStartAMorPM(true);
+        if(activities.getEndHour() < 12)
+            activities.setEndAMorPM(true);
+        else
 
-        //Set these Textviews with the Proper String Value
+        Log.i("Printing to Screen", activities.getActivity() + " on " + activities.getDayOfWeek()+ " from " + activities.getStartHour()+ ":" + activities.getStartMinute() + activities.getStartAMorPM());
+
+        //Set these TextViews with the Proper String Value
         tvActivity.setText(activities.getActivity());
-        tvDay.setText(activities.getDay());
-        tvStart.setText(activities.getStart());
-        tvEnd.setText(activities.getEnd());
-        tvAm1.setText(activities.getStartAM());
-        tvAm2.setText(activities.getEndAM());
+        tvDay.setText(activities.getDayOfWeek());
+        if(activities.getStartHour() <= 12)
+            tvStart.setText(activities.getStartHour() + ":" + String.format("%02d", activities.getStartMinute()));
+        else
+            tvStart.setText(activities.getStartHour() - 12+ ":" + String.format("%02d", activities.getStartMinute()));
+        if(activities.getEndHour() <= 12)
+            tvEnd.setText(activities.getEndHour() + ":" + String.format("%02d", activities.getEndMinute()));
+        else
+            tvEnd.setText(activities.getEndHour() - 12+ ":" + String.format("%02d", activities.getEndMinute()));
+        tvAm1.setText(activities.getStartAMorPM());
+        tvAm2.setText(activities.getEndAMorPM());
 
         return view;
     }
