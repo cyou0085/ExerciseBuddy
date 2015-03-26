@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class UpdateActivity extends ActionBarActivity {
@@ -24,7 +25,7 @@ public class UpdateActivity extends ActionBarActivity {
             db.open();
             updateActivity = db.getRecord(Long.valueOf(activityID));
             db.close();
-            Log.i("Carlos", updateActivity.getActivity());
+            Log.i("Carlos", updateActivity.getActivity() + " " + updateActivity.getDayOfWeek() + updateActivity.getStartHour() + updateActivity.getStartMinute());
         } else {
             Log.i("DW", "no good");
         }
@@ -66,10 +67,10 @@ public class UpdateActivity extends ActionBarActivity {
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, itemsWeek);
         dropdownWeek.setAdapter(adapter2);
 //        String activityID = getIntent().getStringExtra(MainActivity.ACTIVITY_ID);
-//        dropdownWeek.setSelection(Integer.parseInt(passedvar));
+        //dropdownWeek.setSelection(Integer.parseInt(passedvar));
 
 
-        switch (updateActivity.getDay()) {
+        switch (updateActivity.getDayOfWeek()) {
 
             case "Sunday":
                 activityWeek = 0;
@@ -98,31 +99,40 @@ public class UpdateActivity extends ActionBarActivity {
 
         dropdownWeek.setSelection(activityWeek);
 
+
+        TimePicker tpStart= (TimePicker) findViewById(R.id.timePickerStart);
+        TimePicker tpEnd = (TimePicker)  findViewById(R.id.timePickerEnd);
+
+        tpStart.setCurrentHour(updateActivity.getStartHour());
+        tpStart.setCurrentMinute(updateActivity.getStartMinute());
+        tpEnd.setCurrentHour(updateActivity.getEndHour());
+        tpEnd.setCurrentMinute(updateActivity.getEndMinute());
+/*
         EditText startText = (EditText) findViewById(R.id.startTime);
-        startText.setText(updateActivity.getStart());
-        int activityAM = 0;
+        //startText.setText(updateActivity.getStart());
+        boolean activityAMStart = false;
         Spinner dropdownAM = (Spinner) findViewById(R.id.amOrpm);
         String[] itemsTime = new String[]{"AM", "PM"};
         ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, itemsTime);
         dropdownAM.setAdapter(adapter3);
 
-        switch(updateActivity.getStartAM()){
+        switch(updateActivity.getStartAMorPM()){
         case "AM":
-            activityAM = 0;
+            activityAMStart = true;
             break;
         case "PM":
-            activityAM = 1;
+            activityAMStart = false;
             break;
         default:
-            activityAM = -1;
+            activityAMStart = false;
         }
 
-        dropdownAM.setSelection(activityAM);
+        //dropdownAM.setSelection(activityAM);
 
 
-        EditText endText = (EditText)findViewById(R.id.endTime);
-        endText.setText(updateActivity.getEnd());
-        int activityPM = 0;
+        //EditText endText = (EditText)findViewById(R.id.endTime);
+        //endText.setText(updateActivity.getEnd());
+        boolean activityAMEnd = true;
         Spinner dropdownAM2 = (Spinner)findViewById(R.id.amOrpm2);
         String[] itemsTime2 = new String[]{"AM","PM"};
         ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsTime2);
@@ -130,18 +140,18 @@ public class UpdateActivity extends ActionBarActivity {
 
 
 
-        switch(updateActivity.getEndAM()){
+        switch(updateActivity.getEndAMorPM()){
             case "AM":
-                activityPM = 0;
+                activityAMEnd = true;
                 break;
             case "PM":
-                activityPM = 1;
+                activityAMEnd = false;
                 break;
             default:
-                activityPM = -1;
+                activityAMEnd = false;
         }
 
-        dropdownAM2.setSelection(activityPM);
+        //dropdownAM2.setSelection(activityPM);*/
     }
 
     @Override
@@ -167,18 +177,27 @@ public class UpdateActivity extends ActionBarActivity {
         Spinner mySpinner2;
         Spinner mySpinner3;
         Spinner mySpinner4;
+        TimePicker tpStart;
+        TimePicker tpEnd;
+        boolean startAM;
+        boolean endAM;
         String activityID = getIntent().getStringExtra(MainActivity.ACTIVITY_ID);
 
         intent = new Intent(this,MainActivity.class);
-        editText = (EditText) findViewById(R.id.startTime);
-        editText2 = (EditText) findViewById(R.id.endTime);
+        //editText = (EditText) findViewById(R.id.startTime);
+        //editText2 = (EditText) findViewById(R.id.endTime);
         mySpinner = (Spinner) findViewById(R.id.ActivityName);
         mySpinner2 = (Spinner) findViewById(R.id.dayOfWeek);
-        mySpinner3 = (Spinner) findViewById(R.id.amOrpm);
-        mySpinner4 = (Spinner) findViewById(R.id.amOrpm2);
+        tpStart = (TimePicker) findViewById(R.id.timePickerStart);
+        tpEnd = (TimePicker) findViewById(R.id.timePickerEnd);
+
+
+        //mySpinner3 = (Spinner) findViewById(R.id.amOrpm);
+        //mySpinner4 = (Spinner) findViewById(R.id.amOrpm2);
 
         db.open();
-        db.updateRecord(Long.valueOf(activityID), mySpinner.getSelectedItem().toString(), mySpinner2.getSelectedItem().toString(), editText.getText().toString(), editText2.getText().toString(),mySpinner3.getSelectedItem().toString(),mySpinner4.getSelectedItem().toString());
+        db.updateRecord(Long.valueOf(activityID),mySpinner.getSelectedItem().toString(),mySpinner2.getSelectedItem().toString(),tpStart.getCurrentHour(),tpStart.getCurrentMinute(),tpEnd.getCurrentHour(),tpEnd.getCurrentMinute(),false,false);
+        // db.updateRecord(Long.valueOf(activityID), mySpinner.getSelectedItem().toString(), mySpinner2.getSelectedItem().toString(), editText.getText().toString(), editText2.getText().toString(),mySpinner3.getSelectedItem().toString(),mySpinner4.getSelectedItem().toString());
         db.close();
         startActivity(intent);
         Toast.makeText(this, "This activity has been updated", Toast.LENGTH_SHORT).show();
