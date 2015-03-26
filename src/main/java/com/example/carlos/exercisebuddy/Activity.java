@@ -12,7 +12,7 @@ public class Activity {
     //Private Variable Members for Activity class
     private enum  Day{
         Sunday,Monday,Tuesday,Wednesday,Thursday,
-        Saturday;
+        Friday,Saturday;
     }
     private Long ID;
     private Day dayOfWeek;
@@ -20,10 +20,10 @@ public class Activity {
     private int startMinute;
     private int endHour;
     private int endMinute;
-    private boolean startAMorPM;
-    private boolean endAMorPM;
-    public static final int AM = 0;
-    public static final int PM = 1;
+    private boolean startAM;
+    private boolean endAM;
+    public static final boolean AM = true;
+    public static final boolean PM = false;
 
     private String activity;
     private String day;
@@ -48,7 +48,7 @@ public class Activity {
 
 
     //Default Constructor sets everything to default values
-   public Activity(){
+   /*public Activity(){
         this.ID = 0L;
         this.activity = "Class";
         this.day = "Sunday";
@@ -68,7 +68,7 @@ public class Activity {
         this.am1 = startAMorPM;
         this.am2 = endAMorPM;
 
-    }/*
+    }*/
 
     public Activity(){
         this.ID = 0L;
@@ -78,9 +78,11 @@ public class Activity {
         this.startMinute = 99;
         this.endHour = 12;
         this.endMinute = 99;
+        this.startAM = true;
+        this.endAM = true;
     }
     //Assigns values to a new Activity Item
-    public Activity(Long ID, String activity,Day dayofWeek,int startH, int startM,int endH,int endM,boolean startAMorPM,boolean endAMorPM) {
+    public Activity(Long ID, String activity,Day dayofWeek,int startH, int startM,int endH,int endM,boolean startAM,boolean endAM) {
         this.ID = ID;
         this.activity = activity;
         this.dayOfWeek = dayofWeek;
@@ -88,10 +90,10 @@ public class Activity {
         this.startMinute = startM;
         this.endHour = endH;
         this.endMinute = endM;
-        this.startAMorPM = startAMorPM;
-        this.endAMorPM = endAMorPM;
+        this.startAM = startAM;
+        this.endAM = endAM;
 
-    }*/
+    }
 
     //accessor
     public Long getID() { return ID; }
@@ -100,45 +102,92 @@ public class Activity {
         return activity;
     }
 
-    public String getDay() {
-        return day;
+    //public String getDay() {
+      //  return day;
+    //}
+
+    public String getDayOfWeek(){ return dayOfWeek.name(); }
+
+    public int getStartHour(){
+        return startHour;
     }
 
-    public String getStart() {
-        return start;
+    public int getStartMinute(){
+        return startMinute;
     }
+
+    public int getEndHour(){
+        return endHour;
+    }
+
+    public int getEndMinute(){
+        return endMinute;
+    }
+
+    public String getStartAMorPM(){
+        if(startAM == AM)
+            return "AM";
+        else if(startAM == PM)
+            return "PM";
+        return "QM";
+    }
+
+    public String getEndAMorPM(){
+        if(endAM == AM)
+            return "AM";
+        else if (endAM == PM)
+            return "PM";
+        return "QM";
+    }
+
+    //public String getStart() {
+      //  return start;
+    //}
 
     // Number of hours from midnight.
     public float getStartTime() {
-        String strHour = start.substring(0, start.indexOf(":"));
+
+        int tempStartHour = startHour;
+        /*String strHour = start.substring(0, start.indexOf(":"));
         int hour = Integer.parseInt(strHour);
         if (this.am1.equals("PM")) {
             hour += 12;
-        }
-        String strMinute = start.substring(start.indexOf(":")+1, start.indexOf(":")+3);
-        Log.i("getStartTime", start + " Minute portion " + strMinute);
-        int minute = Integer.parseInt(strMinute);
-        return hour + minute/60.0f;
+        }*/
+       // if(this.getStartAMorPM().equals("PM")){
+
+         //   tempStartHour += 12;
+        //}
+       // String strMinute = start.substring(start.indexOf(":")+1, start.indexOf(":")+3);
+        Log.i("getStartTime", tempStartHour + " Minute portion " + startMinute);
+        //int minute = Integer.parseInt(strMinute);
+        //return hour + minute/60.0f;
+        return tempStartHour+ startMinute/60.0f;
+
     }
 
     public float getEndTime() {
-        String strHour = end.substring(0, end.indexOf(":"));
-        int hour = Integer.parseInt(strHour);
-        if (this.am2.equals("PM")) {
-            hour += 12;
-        }
-        String strMinute = end.substring(end.indexOf(":")+1, end.lastIndexOf(":"));
-        int minute = Integer.parseInt(strMinute);
-        return hour + minute/60.0f;
-    }
+        int tempEndHour = endHour;
+        //String strHour = end.substring(0, end.indexOf(":"));
+        //int hour = Integer.parseInt(strHour);
+     //   if (this.am2.equals("PM")) {
+       //     hour += 12;
+        //}
 
+       // if(this.getEndAMorPM().equals("PM")){
+         //   tempEndHour +=12;
+        //}
+        //String strMinute = end.substring(end.indexOf(":")+1, end.lastIndexOf(":"));
+        //int minute = Integer.parseInt(strMinute);
+        return tempEndHour + endMinute/60.0f;
+    }
+/*
     public String getEnd() {
         return end;
     }
 
     public String getStartAM() { return am1;}
 
-    public String getEndAM() { return am2;}
+    public String getEndAM() { return am2;}*/
 
     //Mutators
     public void setId(Long id) { this.ID = id; }
@@ -151,6 +200,52 @@ public class Activity {
         this.day = day;
     }
 
+    public void setDayOfWeek(String dayOfWeek){
+        switch (dayOfWeek){
+            case "Sunday": this.dayOfWeek = Day.Sunday;
+                break;
+            case "Monday": this.dayOfWeek = Day.Monday;
+                break;
+            case "Tuesday": this.dayOfWeek = Day.Tuesday;
+                break;
+            case "Wednesday": this.dayOfWeek = Day.Wednesday;
+                break;
+            case "Thursday": this.dayOfWeek = Day.Thursday;
+                break;
+            case "Friday": this.dayOfWeek = Day.Friday;
+                break;
+            case "Saturday": this.dayOfWeek = Day.Saturday;
+                break;
+            default: this.dayOfWeek = Day.Sunday;
+
+        }
+    }
+
+    public void setStartHour(int startHour){
+        this.startHour = startHour;
+    }
+
+    public void setStartMinute(int startMinute){
+        this.startMinute = startMinute;
+    }
+
+    public void setEndHour(int endHour){
+        this.endHour = endHour;
+    }
+
+    public void setEndMinute(int endMinute){
+        this.endMinute = endMinute;
+    }
+
+    public void setStartAMorPM(boolean startAM){
+        this.startAM = startAM;
+    }
+
+    public void setEndAMorPM(boolean endAM){
+        this.endAM = endAM;
+    }
+
+/*
     public void setStart(String start) {
         this.start = start;
     }
@@ -162,9 +257,9 @@ public class Activity {
     public void setAm1(String am1) { this.am1 = am1; }
 
     public void setAm2(String am2) { this.am2 = am2; }
-
+*/
     public String toString() {
-        return ID + ": " + activity + " on " + day + " from " + start + am1 + "(" + this.getStartTime() + ") until " + end + am2 + "(" + this.getEndTime() + ")";
+        return ID + ": " + activity + " on " + dayOfWeek + " from " + startHour + ":" + String.format("%02d",startMinute) + getStartAMorPM() + "(" + this.getStartTime() + ") until " + endHour + ":" + endMinute + getEndAMorPM() + "(" + this.getEndTime() + ")";
     }
 
 }
