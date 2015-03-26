@@ -8,22 +8,22 @@
 
     <TextView android:text="@string/select_Activity" android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:id="@+id/textViewActivity" />
 
     <Spinner
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:id="@+id/ActivityName"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/textViewActivity"
         android:spinnerMode="dropdown"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_alignRight="@+id/textViewActivity"
+        android:layout_alignEnd="@+id/textViewActivity" />
 
     <TextView
         android:text="@string/select_day"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
+        android:id="@+id/textViewDay"
         android:layout_below="@+id/ActivityName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -32,9 +32,9 @@
 
     <Spinner
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:id="@+id/dayOfWeek"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/textViewDay"
         android:spinnerMode="dropdown"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -43,63 +43,17 @@
         android:text="@string/select_start"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3"
+        android:id="@+id/textViewStart"
         android:layout_below="@+id/dayOfWeek"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/dayOfWeek"
-        android:layout_alignEnd="@+id/dayOfWeek" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="@string/select_end"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:layout_below="@+id/startTime"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/spinner3"
-        android:layout_toStartOf="@+id/spinner3" />
-
-    <EditText
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/startTime"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="@string/time"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_alignEnd="@+id/textView3" />
-
-    <EditText
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/endTime"
-        android:hint="@string/time"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/startTime"
-        android:layout_alignEnd="@+id/startTime" />
-
-    <Spinner
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/amOrpm"
-        android:layout_below="@+id/textView3"
-        android:spinnerMode="dropdown"
-        android:layout_toRightOf="@+id/startTime"
-        android:layout_alignBottom="@+id/startTime" />
-
-    <Spinner
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/amOrpm2"
-        android:spinnerMode="dropdown"
-        android:layout_toRightOf="@+id/startTime"
-        android:layout_alignTop="@+id/endTime"
-        android:layout_alignBottom="@+id/endTime" />
+        android:id="@+id/textViewEnd"
+        android:layout_above="@+id/timePickerEnd"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -107,7 +61,25 @@
         android:text="@string/button_send"
         android:id="@+id/button2"
         android:onClick="AddActivity"
-        android:layout_below="@+id/amOrpm2"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/dayOfWeek"
+        android:layout_toEndOf="@+id/dayOfWeek" />
+
+    <TimePicker
+        android:id="@+id/timePickerEnd"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:timePickerMode="spinner"
+        android:layout_above="@+id/button2"
         android:layout_centerHorizontal="true" />
+
+    <TimePicker
+        android:id="@+id/timePickerStart"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:timePickerMode="spinner"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textViewStart"
+        android:importantForAccessibility="yes" />
 
 </RelativeLayout>
