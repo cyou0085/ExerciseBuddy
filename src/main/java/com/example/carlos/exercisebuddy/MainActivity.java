@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -61,6 +62,7 @@ public class MainActivity extends ActionBarActivity {
         ArrayList <Activity>ActivityList = db.getAllRecords();
         activityList = ActivityList;
         FindRecord();
+
         FindRecordView();
         db.close();
 
@@ -139,12 +141,38 @@ public class MainActivity extends ActionBarActivity {
                 Log.i("DW", "Adding " + activityId + " to intent");
                 i.putExtra(ACTIVITY_ID, activityId);
                 startActivity(i);
+
             }
         });
     }
 
 
-    public void FindRecordView()
+
+
+
+        public boolean onTouchEvent(MotionEvent event) {
+
+        int action = event.getAction() ;
+        float x = event.getX() ;
+        float y = event.getY() ;
+
+        //int width = this.getw;
+        //int height = this.getHeight() ;
+
+        switch(action) {
+            case MotionEvent.ACTION_DOWN:
+
+                if(rect.contains(x, y)) {
+                    // Something should happen
+                    Log.i("Carlos", "your x:" + x + "your y:" + y);
+                }
+
+        }
+            return true ;
+        }
+
+
+        public void FindRecordView()
     {
         final WeekView lv = (WeekView)findViewById(R.id.view2);
         lv.addActivities(activityList);
@@ -158,14 +186,15 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(),UpdateActivity.class);
 
-                for(int i = 0; i <= lv.mActivityRegions.size();i++) {
-                    if (lv.mActivityRegions.get(i).equals(v))
+                //for(int i = 0; i <= lv.mActivityRegions.size();i++) {
+                    if (lv.mActivityRegions.get(0).contains(v.getX(),v.getY()))
                         startActivity(intent);
-                }
+                //}
 
                 Log.i("Carlos", "You Clicked " + activityList.get(1).getActivity() + " at zero");
+                Log.i("Carlos", "You Clicked " + v.getX() + " " + v.getY() + " at zero");
 
-                Log.i("Carlos", "You Clicked " + lv.mActivityRegions.get(1) + " at zero");
+                Log.i("Carlos", "You Clicked " + lv.mActivityRegions.get(0) + " at zero");
 
 
             }
