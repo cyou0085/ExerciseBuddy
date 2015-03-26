@@ -8,22 +8,22 @@
 
     <TextView android:text="@string/select_Activity" android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:id="@+id/textViewActivity" />
 
     <Spinner
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:id="@+id/ActivityName"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/textViewActivity"
         android:spinnerMode="dropdown"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_alignRight="@+id/textViewActivity"
+        android:layout_alignEnd="@+id/textViewActivity" />
 
     <TextView
         android:text="@string/select_day"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
+        android:id="@+id/textViewDay"
         android:layout_below="@+id/ActivityName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -32,9 +32,9 @@
 
     <Spinner
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:id="@+id/dayOfWeek"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/textViewDay"
         android:spinnerMode="dropdown"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -43,44 +43,18 @@
         android:text="@string/select_start"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3"
+        android:id="@+id/textViewStart"
         android:layout_below="@+id/dayOfWeek"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/dayOfWeek"
-        android:layout_alignEnd="@+id/dayOfWeek" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="@string/select_end"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:id="@+id/textView4"
-        android:layout_below="@+id/startTime"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/update"
-        android:layout_toStartOf="@+id/update" />
-
-    <EditText
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/startTime"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_alignEnd="@+id/textView3"
-        android:hint="@string/time" />
-
-    <EditText
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/endTime"
-        android:hint="@string/time"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/update" />
+        android:layout_below="@+id/timePickerStart"
+        android:layout_alignRight="@+id/textViewStart"
+        android:layout_alignEnd="@+id/textViewStart" />
 
     <Button
         android:layout_width="wrap_content"
@@ -88,40 +62,36 @@
         android:text="@string/update"
         android:id="@+id/update"
         android:onClick="UpdateActivity"
-        android:layout_below="@+id/endTime"
-        android:layout_toRightOf="@+id/startTime"
-        android:layout_toEndOf="@+id/startTime"
-        android:layout_marginTop="43dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/timePickerEnd"
+        android:layout_alignStart="@+id/timePickerEnd" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/delete_activity"
         android:id="@+id/viewButton"
-        android:layout_alignBottom="@+id/update"
-        android:layout_toRightOf="@+id/update"
-        android:layout_toEndOf="@+id/update"
-        android:onClick="DeleteActivity" />
+        android:onClick="DeleteActivity"
+        android:layout_alignTop="@+id/update"
+        android:layout_alignLeft="@+id/textViewStart"
+        android:layout_alignStart="@+id/textViewStart" />
 
-    <Spinner
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/amOrpm"
-        android:layout_below="@+id/textView3"
-        android:spinnerMode="dropdown"
-        android:layout_toRightOf="@+id/startTime"
-        android:layout_alignBottom="@+id/startTime"
-        android:layout_toStartOf="@+id/viewButton"
-        android:layout_toLeftOf="@+id/viewButton" />
+    <TimePicker
+        android:layout_width="300dp"
+        android:layout_height="125dp"
+        android:id="@+id/timePickerEnd"
+        android:timePickerMode="spinner"
+        android:foregroundGravity="center"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true" />
 
-    <Spinner
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/amOrpm2"
-        android:spinnerMode="dropdown"
-        android:layout_toRightOf="@+id/startTime"
-        android:layout_alignTop="@+id/endTime"
-        android:layout_toStartOf="@+id/viewButton"
-        android:layout_toLeftOf="@+id/viewButton"
-        android:layout_above="@+id/update" />
+    <TimePicker
+        android:layout_width="300dp"
+        android:layout_height="125dp"
+        android:id="@+id/timePickerStart"
+        android:timePickerMode="spinner"
+        android:foregroundGravity="center_vertical|center"
+        android:layout_below="@+id/textViewStart"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
