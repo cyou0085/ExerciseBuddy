@@ -1,215 +1,206 @@
 package com.example.carlos.exercisebuddy;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.SearchManager;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.RectF;
-import android.util.AttributeSet;
+import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import com.example.carlos.exercisebuddy.ActivityListAdapter;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
-/**
- * Created by dwalter on 3/12/15.
- */
-public class WeekView extends View implements View.OnClickListener {
 
-DBAdapterActivity db = new DBAdapterActivity(getContext());
 
-    private Paint mPaint;
-    private Paint mActivityPaint;
-    private Paint mActivityPaintBlue;
-    private Paint mActivityPaintYellow;
-    private Paint mActivityPaintGreen;
-    private Paint mActivityPaintOrange;
-    int mWidth;
-    int mHeight;
-    private float clickX;
-    private float clickY;
-    ArrayList<Activity> mActivities;
-    ArrayList<RectF> mActivityRegions;
+
+public class MainActivity extends ActionBarActivity implements View.OnClickListener {
     ActivityListAdapter adapter;
+    ArrayList<Activity> activityList = new ArrayList <Activity>();
+    RectF rect =  new RectF();
+    Button setNotify;
 
-    private TextView myText = null;
+    public final static String ACTIVITY_ID = "com.example.carlos.exercisebuddy.MainActivity.tvID";
+    //boolean alreadyBeen = false;
 
-    public WeekView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-        mActivities = new ArrayList<Activity>();
-        mActivityRegions = new ArrayList<RectF>();
-        this.setOnClickListener(this);
-    }
+    //@Override
+    protected void onCreate(Bundle savedInstanceState) {
 
-    //creates the Paint objects that will be used whenever the onDraw method is called.
-    // They are constructed here for performance reasons to prevent unnecessarily
-    // creating instances of these objects every time onDraw is called.
-    private void init() {
-        mPaint = new Paint(0);
-        mPaint.setColor(0xff101010);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setAntiAlias(true);
-        mPaint.setStrokeWidth(3.0f);
-        mActivityPaint = new Paint(0);
-        mActivityPaint.setColor(0xffff0000);
-        mActivityPaint.setAntiAlias(true);
-        mActivityPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        mActivityPaintYellow = new Paint(0);
-        mActivityPaintYellow.setColor(0xffffff33);
-        mActivityPaintYellow.setAntiAlias(true);
-        mActivityPaintYellow.setStyle(Paint.Style.FILL_AND_STROKE);
-        mActivityPaintBlue = new Paint(0);
-        mActivityPaintBlue.setColor(0xff0000ff);
-        mActivityPaintBlue.setAntiAlias(true);
-        mActivityPaintBlue.setStyle(Paint.Style.FILL_AND_STROKE);
-        mActivityPaintGreen = new Paint(0);
-        mActivityPaintGreen.setColor(0xff00ff00);
-        mActivityPaintGreen.setAntiAlias(true);
-        mActivityPaintGreen.setStyle(Paint.Style.FILL_AND_STROKE);
-        mActivityPaintOrange = new Paint(0);
-        mActivityPaintOrange.setColor(0xff333300);
-        mActivityPaintOrange.setAntiAlias(true);
-        mActivityPaintOrange.setStyle(Paint.Style.FILL_AND_STROKE);
+        //String activityID = getIntent().getStringExtra(SleepActivity.ACTIVITY_TIMES);
+        //String sleepTimes = activityID;
+        //Intent numbers = getIntent();
+       // String nums = numbers.getStringExtra("mSleep"," ");
+        /*if (activityID != null) {
+            Log.i("DREW", activityID);
+            //Log.i("Carlos", updateActivity.getActivity() + " " + updateActivity.getDayOfWeek() + updateActivity.getStartHour() + updateActivity.getStartMinute());
+        } else {
+            activityID = "00 00 00 00 00 00 00 00";
+            Log.i("DW", "no good");
+        }*/
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+        DBAdapterActivity db = new DBAdapterActivity(this);
+        setNotify = (Button) findViewById(R.id.button4);
+        setNotify.setOnClickListener(this);
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+        // Get all the Activities from the db and tvs them in an ArrayList
+        //Then Displays the List in the View
+        db.open();
+        ArrayList <Activity>ActivityList = db.getAllRecords();
+        activityList = ActivityList;
 
-        //mPaint.setMaskFilter(new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL));
-
-    }
-
-    //Store Activity Items Within the the ArrayList
-    public void addNewActivity(Activity a) {
-        mActivities.add(a);
-        mActivityRegions.add(calculateActivityRegion(a));
-    }
-
-    private RectF calculateActivityRegion(Activity a) {
-        float hourWidth = this.getWidth()/24.0f;
-        RectF r = null;
-        switch (a.getDayOfWeek()) {
-            case "Sunday":
-                r = new RectF(hourWidth * a.getStartTime(), 0, hourWidth * a.getEndTime(), mHeight / 7);
-                break;
-            case "Monday":
-                r = new RectF(hourWidth * a.getStartTime(), mHeight / 7, hourWidth * a.getEndTime(), 2 * mHeight / 7);
-                break;
-            case "Tuesday":
-                r = new RectF(hourWidth * a.getStartTime(), 2 * mHeight / 7, hourWidth * a.getEndTime(), 3 * mHeight / 7);
-                break;
-            case "Wednesday":
-                r = new RectF(hourWidth * a.getStartTime(), 3 * mHeight / 7, hourWidth * a.getEndTime(), 4 * mHeight / 7);
-                break;
-            case "Thursday":
-                r = new RectF(hourWidth * a.getStartTime(), 4 * mHeight / 7, hourWidth * a.getEndTime(), 5 * mHeight / 7);
-                break;
-            case "Friday":
-                r = new RectF(hourWidth * a.getStartTime(), 5 * mHeight / 7, hourWidth * a.getEndTime(), 6 * mHeight / 7);
-                break;
-            case "Saturday":
-                r = new RectF(hourWidth * a.getStartTime(), 6 * mHeight / 7, hourWidth * a.getEndTime(), 7 * mHeight / 7);
-                break;
-        }
-        return r;
-    }
-
-    public void addActivities(ArrayList<Activity> activities) {
-        mActivities.addAll(activities);
-        for (Activity a : activities) {
-            mActivityRegions.add(calculateActivityRegion(a));
-        }
-    }
-
-
-
-    //Draw a Board that is split into 3 Columns(Morning,Afternoon,Night) and 7 Rows(WeekDays)
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        // Draw the day dividing lines
-        canvas.drawRect(new RectF(0, 0, mWidth, mHeight), mPaint);
-        for (int i = 0; i < 7; i++) {
-            canvas.drawLine(0, i * mHeight/7, mWidth, i * mHeight/7, mPaint);
-        }
-
-        for(int i = 1; i <= 3; i++){
-            canvas.drawLine(i*mWidth/3,0,i*mWidth/3,mHeight,mPaint);
-        }
-
-        //loops through all activites creating a Rectangle
-        //on the corresponding day
-        for (int i = 0; i < mActivities.size(); i++) {
-            Activity a = mActivities.get(i);
-            RectF r = mActivityRegions.get(i);
-            Log.i("WeekView", "Drawing activity " + a);
-            Log.i("WeekView", "  Corresponding " + r);
-            //Creates the block on the canvas with the appropriate
-            //color corresponding to the activity thats being done
-            switch (a.getActivity()){
-                case "Sleep": canvas.drawRect(r,mActivityPaintYellow);
-                    break;
-                case "Work": canvas.drawRect(r,mActivityPaintGreen);
-                    break;
-                case "Workout": canvas.drawRect(r,mActivityPaintBlue);
-                    break;
-                case "Class": canvas.drawRect(r,mActivityPaint);
-                    break;
-                case "Eating": canvas.drawRect(r,mActivityPaintOrange);
-                    break;
-                default:
-                   canvas.drawRect(r,mActivityPaint);
+        db.close();
+        try {
+            String destPath = "/data/data/" + getPackageName() + "/databases/ActivityDB";
+            File f = new File(destPath);
+            if (!f.exists()) {
+                CopyDB( getBaseContext().getAssets().open("mydb"),
+                        new FileOutputStream(destPath));
             }
-
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 
-    }
 
-    protected void onSizeChanged (int w, int h, int oldw, int oldh) {
-        mWidth = w;
-        mHeight = h;
+        // Populate the WeekView's activities with the items that were in the
+        // database upon application startup.
+        WeekView wv = (WeekView) findViewById(R.id.view2);
+        //if (activityID != null)
+          //  wv.addSleep(sleepTimes);
+        wv.addActivities(activityList);
 
-        // When the screeen size changes (new orientation, etc.), recalcualte all
-        // the regions corresponding to the activities.
-        mActivityRegions = new ArrayList<RectF>();
-        for (Activity a: mActivities) {
-            mActivityRegions.add(calculateActivityRegion(a));
-        }
-
-    }
-
-    public boolean onTouchEvent(MotionEvent event) {
-        Log.i("WeekView", "onTouchEvent called");
-        int action = event.getAction();
-        clickX = event.getX();
-        clickY = event.getY();
-        performClick();
-        return true;
     }
 
     @Override
     public void onClick(View v) {
-        for (int i = 0; i < mActivityRegions.size(); i++) {
-            if (mActivityRegions.get(i).contains(clickX, clickY)) {
-                Log.i("WeekView", "User clicked on Activity " + mActivities.get(i));
-                return;
-            }
+        Intent intent = new Intent();
+        if(v.getId() == R.id.button4){
+            intent.setClass(this,MyNotificationService.class);
+            startService(intent);
         }
-        Log.i("WeekView", "Click detected but no activity clicked on");
+
     }
 
 
+    private class DBAdapterSleep extends BaseAdapter {
+        private LayoutInflater mInflater;
+        //private ArrayList<>
 
+        @Override
+        public int getCount() {
+
+            return 0;
+        }
+
+        @Override
+        public Object getItem(int arg0) {
+
+            return null;
+        }
+
+        @Override
+        public long getItemId(int arg0) {
+
+            return 0;
+        }
+
+        @Override
+        public View getView(int arg0, View arg1, ViewGroup arg2) {
+
+            return null;
+        }
+
+    }
+
+    //Adds an Activity to db
+    public void AddActivity(View view){
+        Intent intent;
+
+            intent = new Intent(getBaseContext(), AddActivity.class);
+            startActivity(intent);
+
+    }
+
+    //Adds an Activity to db
+    public void AddSleep(View view){
+
+/*
+        Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5000, pendingIntent);
+        Intent intent = new Intent();
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setContentTitle(this.getResources().getString(R.string.title_activity_week))
+                        .setContentText(this.getResources().getString(R.string.title_activity_update))
+                        .setAutoCancel(true);
+
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(resultPendingIntent);
+
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        Notification noti = new Notification.Builder(this)
+                .setTicker("Ticker Title")
+                .setContentTitle("Content Title")
+                .setContentText("Notification content.")
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentIntent(pIntent).getNotification();
+        noti.flags=Notification.FLAG_AUTO_CANCEL;
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(0, mBuilder.build());*/
+
+    }
+    //Takes you the Week View of your DataBase
+    /*
+    public void WeekActivity(View view){
+
+        Intent intent;
+        intent = new Intent(getBaseContext(), WeekView.class);
+
+        startActivity(intent);
+
+    }*/
 
 /*
     public void FindRecord()
     {
-        WeekView lv = (WeekView)findViewById(R.id.view2);
+       // ListView lv = (ListView)findViewById(R.id.listView1);
 
-        adapter = new ActivityListAdapter(mActivities, getContext());
+        adapter = new ActivityListAdapter(activityList, MainActivity.this);
         lv.setAdapter(adapter);
         lv.setClickable(true);
         lv.setOnItemClickListener( new AdapterView.OnItemClickListener() {
@@ -220,7 +211,111 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
                 Log.i("DW", "Adding " + activityId + " to intent");
                 i.putExtra(ACTIVITY_ID, activityId);
                 startActivity(i);
+
             }
         });
-    }*/
+    }
+*/
+
+
+
+//
+//        public boolean onTouchEvent(MotionEvent event) {
+//
+//        int action = event.getAction() ;
+//        float x = event.getX() ;
+//        float y = event.getY() ;
+//
+//        //int width = this.getw;
+//        //int height = this.getHeight() ;
+//
+//        switch(action) {
+//            case MotionEvent.ACTION_DOWN:
+//
+//                if(rect.contains(x, y)) {
+//                    // Something should happen
+//                    Log.i("Carlos", "your x:" + x + "your y:" + y);
+//                }
+//
+//        }
+//            return true ;
+//        }
+
+
+        public void FindRecordView()
+    {
+        final WeekView lv = (WeekView)findViewById(R.id.view2);
+        lv.addActivities(activityList);
+        rect = lv.mActivityRegions.get(1);
+        adapter = new ActivityListAdapter(activityList, MainActivity.this);
+
+        lv.setClickable(true);
+        lv.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(),UpdateActivity.class);
+
+                //for(int i = 0; i <= lv.mActivityRegions.size();i++) {
+                    if (lv.mActivityRegions.get(0).contains(v.getX(),v.getY()))
+                        startActivity(intent);
+                //}
+
+                Log.i("Carlos", "You Clicked " + activityList.get(1).getActivity() + " at zero");
+                Log.i("Carlos", "You Clicked " + v.getX() + " " + v.getY() + " at zero");
+
+                Log.i("Carlos", "You Clicked " + lv.mActivityRegions.get(0) + " at zero");
+
+
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        switch(item.getItemId()) {
+            //noinspection SimplifiableIfStatement
+            case R.id.action_settings:
+                openSettings();
+                return true;
+            case R.id.action_search:
+                openSearch();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openSettings() {
+
+        startActivity(new Intent(Settings.ACTION_SETTINGS));
+    }
+
+    private void openSearch(){
+        startActivity(new Intent(SearchManager.INTENT_ACTION_GLOBAL_SEARCH));
+    }
+
+    public void CopyDB(InputStream inputStream, OutputStream outputStream)
+            throws IOException {
+        //---copy 1K bytes at a time---
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = inputStream.read(buffer)) > 0) {
+            outputStream.write(buffer, 0, length);
+        }
+        inputStream.close();
+        outputStream.close();
+    }
+
 }
