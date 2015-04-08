@@ -20,12 +20,13 @@ public class Activity {
     private int startMinute;
     private int endHour;
     private int endMinute;
+    private String activity;
+    private String notes;
     private boolean startAM;
     private boolean endAM;
     public static final boolean AM = true;
     public static final boolean PM = false;
 
-    private String activity;
     private String day;
     private String start;
     private String end;
@@ -74,15 +75,16 @@ public class Activity {
         this.ID = 0L;
         this.activity = "Sleep";
         this.dayOfWeek = Day.Sunday;
-        this.startHour = 12;
-        this.startMinute = 99;
-        this.endHour = 12;
-        this.endMinute = 99;
+        this.startHour = 00;
+        this.startMinute = 00;
+        this.endHour = 00;
+        this.endMinute = 50;
         this.startAM = true;
         this.endAM = true;
+        this.notes = "";
     }
     //Assigns values to a new Activity Item
-    public Activity(Long ID, String activity,Day dayofWeek,int startH, int startM,int endH,int endM,boolean startAM,boolean endAM) {
+    public Activity(Long ID, String activity,Day dayofWeek,int startH, int startM,int endH,int endM,boolean startAM,boolean endAM,String notes) {
         this.ID = ID;
         this.activity = activity;
         this.dayOfWeek = dayofWeek;
@@ -92,7 +94,7 @@ public class Activity {
         this.endMinute = endM;
         this.startAM = startAM;
         this.endAM = endAM;
-
+        this.notes = notes;
     }
 
     //accessor
@@ -189,6 +191,10 @@ public class Activity {
 
     public String getEndAM() { return am2;}*/
 
+    public String getNotes (){
+        return notes;
+    }
+
     //Mutators
     public void setId(Long id) { this.ID = id; }
 
@@ -245,6 +251,8 @@ public class Activity {
         this.endAM = endAM;
     }
 
+    public void setNotes(String notes) {this.notes = notes;}
+
 /*
     public void setStart(String start) {
         this.start = start;
@@ -259,7 +267,7 @@ public class Activity {
     public void setAm2(String am2) { this.am2 = am2; }
 */
     public String toString() {
-        return ID + ": " + activity + " on " + dayOfWeek + " from " + startHour + ":" + String.format("%02d",startMinute) + getStartAMorPM() + "(" + this.getStartTime() + ") until " + endHour + ":" + endMinute + getEndAMorPM() + "(" + this.getEndTime() + ")";
+        return ID + ": " + activity + " on " + dayOfWeek + " from " + startHour + ":" + String.format("%02d",startMinute) + getStartAMorPM() + "(" + this.getStartTime() + ") until " + endHour + ":" + endMinute + getEndAMorPM() + "(" + this.getEndTime() + ")" + " P.S " + notes;
     }
 
 }
