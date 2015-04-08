@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -34,18 +35,18 @@ public class UpdateActivity extends ActionBarActivity {
         int activityName = 0;
 
         Spinner dropdown = (Spinner) findViewById(R.id.ActivityName);
-        String[] items = new String[]{"Sleep", "Work", "Workout", "Class", "Eating"};
+        String[] items = new String[]{"Nap", "Work", "Workout/Exercise", "Class", "Eating","Study/Homework","Meeting","Others"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
         switch (updateActivity.getActivity()) {
 
-            case "Sleep":
+            case "Nap":
                 activityName = 0;
                 break;
             case "Work":
                 activityName = 1;
                 break;
-            case "Workout":
+            case "Workout/Exercise":
                 activityName = 2;
                 break;
             case "Class":
@@ -54,6 +55,11 @@ public class UpdateActivity extends ActionBarActivity {
             case "Eating":
                 activityName = 4;
                 break;
+            case "Study/Homework":
+                activityName = 5;
+                break;
+            case "Meeting":
+                activityName = 6;
             default:
                 activityName = -1;
         }
@@ -107,6 +113,9 @@ public class UpdateActivity extends ActionBarActivity {
         tpStart.setCurrentMinute(updateActivity.getStartMinute());
         tpEnd.setCurrentHour(updateActivity.getEndHour());
         tpEnd.setCurrentMinute(updateActivity.getEndMinute());
+
+        EditText tvNotes = (EditText)findViewById(R.id.Notes);
+        tvNotes.setText(updateActivity.getNotes());
 /*
         EditText startText = (EditText) findViewById(R.id.startTime);
         //startText.setText(updateActivity.getStart());
@@ -179,6 +188,7 @@ public class UpdateActivity extends ActionBarActivity {
         Spinner mySpinner4;
         TimePicker tpStart;
         TimePicker tpEnd;
+        TextView tvNotes;
         boolean startAM;
         boolean endAM;
         String activityID = getIntent().getStringExtra(MainActivity.ACTIVITY_ID);
@@ -190,13 +200,15 @@ public class UpdateActivity extends ActionBarActivity {
         mySpinner2 = (Spinner) findViewById(R.id.dayOfWeek);
         tpStart = (TimePicker) findViewById(R.id.timePickerStart);
         tpEnd = (TimePicker) findViewById(R.id.timePickerEnd);
+        tvNotes = (EditText)findViewById(R.id.Notes);
+
 
 
         //mySpinner3 = (Spinner) findViewById(R.id.amOrpm);
         //mySpinner4 = (Spinner) findViewById(R.id.amOrpm2);
 
         db.open();
-        db.updateRecord(Long.valueOf(activityID),mySpinner.getSelectedItem().toString(),mySpinner2.getSelectedItem().toString(),tpStart.getCurrentHour(),tpStart.getCurrentMinute(),tpEnd.getCurrentHour(),tpEnd.getCurrentMinute(),false,false);
+        db.updateRecord(Long.valueOf(activityID),mySpinner.getSelectedItem().toString(),mySpinner2.getSelectedItem().toString(),tpStart.getCurrentHour(),tpStart.getCurrentMinute(),tpEnd.getCurrentHour(),tpEnd.getCurrentMinute(),false,false,tvNotes.getText().toString());
         // db.updateRecord(Long.valueOf(activityID), mySpinner.getSelectedItem().toString(), mySpinner2.getSelectedItem().toString(), editText.getText().toString(), editText2.getText().toString(),mySpinner3.getSelectedItem().toString(),mySpinner4.getSelectedItem().toString());
         db.close();
         startActivity(intent);
