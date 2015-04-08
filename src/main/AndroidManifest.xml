@@ -12,7 +12,6 @@
             android:theme="@style/Display1" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,12 +28,18 @@
             android:name=".UpdateActivity"
             android:label="@string/title_activity_update"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Display1">
+            android:theme="@style/Display1" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.carlos.exercisebuddy.MainActivity" />
         </activity>
+        <activity
+            android:name=".SleepActivity"
+            android:label="@string/title_activity_sleep"
+            android:theme="@style/Display1">
 
+        </activity>
+        <service android:name=".MyNotificationService"></service>
     </application>
 
 </manifest>
