@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -24,7 +25,7 @@ DBAdapterActivity db = new DBAdapterActivity(this);
         //Creates Spinner for Activity Name,Week Day,AM/PM for Start
         //and a AM/PM for Stop time(dropdownAM2)
         Spinner dropdown = (Spinner)findViewById(R.id.ActivityName);
-        String[] items = new String[]{"Sleep", "Work", "Workout","Class","Eating"};
+        String[] items = new String[]{"Nap","Work", "Workout/Exercise","Class","Eating","Study/Homework","Meeting","Others"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
 
@@ -32,6 +33,7 @@ DBAdapterActivity db = new DBAdapterActivity(this);
         String[] itemsWeek = new String[]{"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsWeek);
         dropdownWeek.setAdapter(adapter2);
+
 /*
         Spinner dropdownAM = (Spinner)findViewById(R.id.amOrpm);
         String[] itemsTime = new String[]{"AM","PM"};
@@ -73,6 +75,8 @@ DBAdapterActivity db = new DBAdapterActivity(this);
         TimePicker tpEnd;
         Boolean startAM=false;
         Boolean endAM=false;
+        EditText tvNotes = (EditText)findViewById(R.id.Notes);
+        String Notes;
         //assign them to the corresponding xml element
         intent = new Intent(this,MainActivity.class);
         //editText = (EditText) findViewById(R.id.startTime);
@@ -96,7 +100,6 @@ DBAdapterActivity db = new DBAdapterActivity(this);
         Log.i("getCurrentAMorPM", String.valueOf(startAM));
 
 
-
         tpEnd = (TimePicker) findViewById(R.id.timePickerEnd);
         tpEnd.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
@@ -117,7 +120,7 @@ DBAdapterActivity db = new DBAdapterActivity(this);
         db.open();
         Log.i("AddingActivity",spinnerActivity.getSelectedItem().toString() + " on " + spinnerWeekDay.getSelectedItem().toString() + " from " + tpStart.getCurrentHour() + ":" + tpStart.getCurrentMinute() + startAM);
 
-        db.insertRecord(spinnerActivity.getSelectedItem().toString(), spinnerWeekDay.getSelectedItem().toString(),tpStart.getCurrentHour(),tpStart.getCurrentMinute(),tpEnd.getCurrentHour(),tpEnd.getCurrentMinute(),startAM,endAM);
+        db.insertRecord(spinnerActivity.getSelectedItem().toString(), spinnerWeekDay.getSelectedItem().toString(),tpStart.getCurrentHour(),tpStart.getCurrentMinute(),tpEnd.getCurrentHour(),tpEnd.getCurrentMinute(),startAM,endAM,tvNotes.getText().toString());
         db.close();
         startActivity(intent);
         Toast.makeText(this, "Your activity has been added", Toast.LENGTH_SHORT).show();
