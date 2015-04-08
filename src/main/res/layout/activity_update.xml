@@ -94,4 +94,25 @@
         android:layout_below="@+id/textViewStart"
         android:layout_centerHorizontal="true" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/Notes"
+        android:id="@+id/tvNotes"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/update"
+        android:layout_toEndOf="@+id/update" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Notes"
+        android:layout_below="@+id/tvNotes"
+        android:layout_alignLeft="@+id/tvNotes"
+        android:layout_alignStart="@+id/tvNotes"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:hint="Enter information about your activity" />
 </RelativeLayout>
