@@ -25,11 +25,12 @@ public class DBAdapterActivity {
     public static final String KEY_ENDM = "endM";
     public static final String KEY_START_AM = "startAMorPM";
     public static final String KEY_END_AM = "endAMorPM";
+    public static final String KEY_NOTES = "notes";
     private static final String TAG = "DBAdapterActivity";
     //Table Name and version
-    private static final String DATABASE_NAME = "myExerciseBuddy";
-    private static final String DATABASE_TABLE = "myactivity";
-    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "mydbExerciseBuddy";
+    private static  String DATABASE_TABLE = " myactivity";
+    private static final int DATABASE_VERSION = 2;
 
     //Creates Table
     /*private static final String DATABASE_CREATE =
@@ -37,7 +38,7 @@ public class DBAdapterActivity {
                     + KEY_DAY + " VARCHAR not null," + KEY_ACTIVITY + " VARCHAR not null," + KEY_SLEEP + " VARCHAR," + KEY_WAKE + " VARCHAR," + KEY_START_AM + " VARCHAR," + KEY_END_AM + " VARCHAR)";*/
     private static final String DATABASE_CREATE =
             "CREATE TABLE " + DATABASE_TABLE + " (id integer primary key autoincrement, "
-                    + KEY_DAY + " VARCHAR not null," + KEY_ACTIVITY + " VARCHAR not null," + KEY_STARTH + " INTEGER," + KEY_STARTM + " INTEGER,"+ KEY_ENDH + " INTEGER," + KEY_ENDM + " INTEGER," + KEY_START_AM + " BOOLEAN," + KEY_END_AM + " BOOLEAN)";
+                    + KEY_DAY + " VARCHAR not null," + KEY_ACTIVITY + " VARCHAR not null," + KEY_STARTH + " INTEGER," + KEY_STARTM + " INTEGER,"+ KEY_ENDH + " INTEGER," + KEY_ENDM + " INTEGER," + KEY_START_AM + " BOOLEAN," + KEY_END_AM + " BOOLEAN," + KEY_NOTES + " VARCHAR)";
 
     private final Context context;
 
@@ -107,7 +108,7 @@ public class DBAdapterActivity {
         initialValues.put(KEY_END_AM,am2);
         return db.insert(DATABASE_TABLE, null, initialValues);
     }*/
-    public long insertRecord(String activity, String day,int startH, int startM, int endH, int endM,boolean startAM,boolean endAM)
+    public long insertRecord(String activity, String day,int startH, int startM, int endH, int endM,boolean startAM,boolean endAM,String notes)
     {
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_ACTIVITY,activity);
@@ -118,6 +119,7 @@ public class DBAdapterActivity {
         initialValues.put(KEY_ENDM,endM);
         initialValues.put(KEY_START_AM,startAM);
         initialValues.put(KEY_END_AM,endAM);
+        initialValues.put(KEY_NOTES,notes);
         return db.insert(DATABASE_TABLE, null, initialValues);
     }
 
@@ -131,7 +133,7 @@ public class DBAdapterActivity {
     public ArrayList<Activity> getAllRecords()
     {
         ArrayList<Activity> Activity_aList = new ArrayList<Activity>();
-        Cursor c = db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_ACTIVITY, KEY_DAY,KEY_STARTH,KEY_STARTM,KEY_ENDH,KEY_ENDM,KEY_START_AM,KEY_END_AM}, null, null, null, null,null);
+        Cursor c = db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_ACTIVITY, KEY_DAY,KEY_STARTH,KEY_STARTM,KEY_ENDH,KEY_ENDM,KEY_START_AM,KEY_END_AM,KEY_NOTES}, null, null, null, null,null);
         if(c != null){
             if(c.moveToFirst()){
                 do{
@@ -146,6 +148,7 @@ public class DBAdapterActivity {
                     Activities.setEndMinute(c.getInt(c.getColumnIndex(DBAdapterActivity.KEY_ENDM)));
                     Activities.setStartAMorPM(Boolean.parseBoolean(c.getString(c.getColumnIndex(DBAdapterActivity.KEY_START_AM))));
                     Activities.setEndAMorPM(Boolean.parseBoolean(c.getString(c.getColumnIndex(DBAdapterActivity.KEY_END_AM))));
+                    Activities.setNotes(c.getString(c.getColumnIndex(DBAdapterActivity.KEY_NOTES)));
                     Activity_aList.add(Activities);
                 }while(c.moveToNext());
             }
@@ -178,7 +181,7 @@ public class DBAdapterActivity {
 
         Cursor mCursor =
                 db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID, KEY_ACTIVITY,
-                                KEY_DAY, KEY_STARTH,KEY_STARTM,KEY_ENDH,KEY_ENDM,KEY_START_AM,KEY_END_AM},
+                                KEY_DAY, KEY_STARTH,KEY_STARTM,KEY_ENDH,KEY_ENDM,KEY_START_AM,KEY_END_AM,KEY_NOTES},
                         KEY_ROWID + "=" + rowId, null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -193,7 +196,7 @@ public class DBAdapterActivity {
         indexActivity.setEndMinute(mCursor.getInt(mCursor.getColumnIndex(DBAdapterActivity.KEY_ENDM)));
         indexActivity.setStartAMorPM(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_START_AM))));
         indexActivity.setEndAMorPM(Boolean.parseBoolean(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_END_AM))));
-
+        indexActivity.setNotes(mCursor.getString(mCursor.getColumnIndex(DBAdapterActivity.KEY_NOTES)));
         return indexActivity;
     }
 
@@ -210,7 +213,7 @@ public class DBAdapterActivity {
         args.put(KEY_END_AM,am2);
         return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
     }*/
-    public boolean updateRecord(long rowId, String activity,String day,int startH, int startM, int endH, int endM,boolean startAM,boolean endAM)
+    public boolean updateRecord(long rowId, String activity,String day,int startH, int startM, int endH, int endM,boolean startAM,boolean endAM,String notes)
     {
         ContentValues args = new ContentValues();
         args.put(KEY_ACTIVITY, activity);
@@ -221,6 +224,7 @@ public class DBAdapterActivity {
         args.put(KEY_ENDM, endM);
         args.put(KEY_START_AM, startAM);
         args.put(KEY_END_AM, endAM);
+        args.put(KEY_NOTES,notes);
         return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
     }
 }
