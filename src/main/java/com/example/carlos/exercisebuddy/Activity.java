@@ -33,6 +33,7 @@ public class Activity {
     private String am1;
     private String am2;
 
+<<<<<<< Updated upstream
     // alternative representation:
     // Long ID
     // String dayOfWeek -> Enumeration instead??
@@ -70,6 +71,8 @@ public class Activity {
         this.am2 = endAMorPM;
 
     }*/
+=======
+>>>>>>> Stashed changes
 
     public Activity(){
         this.ID = 0L;
@@ -104,9 +107,12 @@ public class Activity {
         return activity;
     }
 
+<<<<<<< Updated upstream
     //public String getDay() {
       //  return day;
     //}
+=======
+>>>>>>> Stashed changes
 
     public String getDayOfWeek(){ return dayOfWeek.name(); }
 
@@ -142,14 +148,18 @@ public class Activity {
         return "QM";
     }
 
+<<<<<<< Updated upstream
     //public String getStart() {
       //  return start;
     //}
+=======
+>>>>>>> Stashed changes
 
     // Number of hours from midnight.
     public float getStartTime() {
 
         int tempStartHour = startHour;
+<<<<<<< Updated upstream
         /*String strHour = start.substring(0, start.indexOf(":"));
         int hour = Integer.parseInt(strHour);
         if (this.am1.equals("PM")) {
@@ -163,12 +173,16 @@ public class Activity {
         Log.i("getStartTime", tempStartHour + " Minute portion " + startMinute);
         //int minute = Integer.parseInt(strMinute);
         //return hour + minute/60.0f;
+=======
+
+>>>>>>> Stashed changes
         return tempStartHour+ startMinute/60.0f;
 
     }
 
     public float getEndTime() {
         int tempEndHour = endHour;
+<<<<<<< Updated upstream
         //String strHour = end.substring(0, end.indexOf(":"));
         //int hour = Integer.parseInt(strHour);
      //   if (this.am2.equals("PM")) {
@@ -190,6 +204,12 @@ public class Activity {
     public String getStartAM() { return am1;}
 
     public String getEndAM() { return am2;}*/
+=======
+
+        return tempEndHour + endMinute/60.0f;
+    }
+
+>>>>>>> Stashed changes
 
     public String getNotes (){
         return notes;
@@ -253,6 +273,7 @@ public class Activity {
 
     public void setNotes(String notes) {this.notes = notes;}
 
+<<<<<<< Updated upstream
 /*
     public void setStart(String start) {
         this.start = start;
@@ -266,6 +287,9 @@ public class Activity {
 
     public void setAm2(String am2) { this.am2 = am2; }
 */
+=======
+
+>>>>>>> Stashed changes
     public String toString() {
         return ID + ": " + activity + " on " + dayOfWeek + " from " + startHour + ":" + String.format("%02d",startMinute) + getStartAMorPM() + "(" + this.getStartTime() + ") until " + endHour + ":" + endMinute + getEndAMorPM() + "(" + this.getEndTime() + ")" + " P.S " + notes;
     }

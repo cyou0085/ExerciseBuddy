@@ -31,9 +31,15 @@ public class UpdateActivity extends ActionBarActivity {
             Log.i("DW", "no good");
         }
 
+<<<<<<< Updated upstream
 
         int activityName = 0;
 
+=======
+
+        int activityName = 0;
+
+>>>>>>> Stashed changes
         Spinner dropdown = (Spinner) findViewById(R.id.ActivityName);
         String[] items = new String[]{"Nap", "Work", "Workout/Exercise", "Class", "Eating","Study/Homework","Meeting","Others"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -72,6 +78,7 @@ public class UpdateActivity extends ActionBarActivity {
         String[] itemsWeek = new String[]{"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, itemsWeek);
         dropdownWeek.setAdapter(adapter2);
+<<<<<<< Updated upstream
 //        String activityID = getIntent().getStringExtra(MainActivity.ACTIVITY_ID);
         //dropdownWeek.setSelection(Integer.parseInt(passedvar));
 
@@ -161,6 +168,51 @@ public class UpdateActivity extends ActionBarActivity {
         }
 
         //dropdownAM2.setSelection(activityPM);*/
+=======
+
+
+        switch (updateActivity.getDayOfWeek()) {
+
+            case "Sunday":
+                activityWeek = 0;
+                break;
+            case "Monday":
+                activityWeek = 1;
+                break;
+            case "Tuesday":
+                activityWeek = 2;
+                break;
+            case "Wednesday":
+                activityWeek = 3;
+                break;
+            case "Thursday":
+                activityWeek = 4;
+                break;
+            case "Friday":
+                activityWeek = 5;
+                break;
+            case "Saturday":
+                activityWeek = 6;
+                break;
+            default:
+                activityWeek = -1;
+        }
+
+        dropdownWeek.setSelection(activityWeek);
+
+
+        TimePicker tpStart= (TimePicker) findViewById(R.id.timePickerStart);
+        TimePicker tpEnd = (TimePicker)  findViewById(R.id.timePickerEnd);
+
+        tpStart.setCurrentHour(updateActivity.getStartHour());
+        tpStart.setCurrentMinute(updateActivity.getStartMinute());
+        tpEnd.setCurrentHour(updateActivity.getEndHour());
+        tpEnd.setCurrentMinute(updateActivity.getEndMinute());
+
+        EditText tvNotes = (EditText)findViewById(R.id.Notes);
+        tvNotes.setText(updateActivity.getNotes());
+
+>>>>>>> Stashed changes
     }
 
     @Override
@@ -180,10 +232,9 @@ public class UpdateActivity extends ActionBarActivity {
 
     public void UpdateActivity(View view) {
         Intent intent;
-        EditText editText;
-        EditText editText2;
         Spinner mySpinner;
         Spinner mySpinner2;
+<<<<<<< Updated upstream
         Spinner mySpinner3;
         Spinner mySpinner4;
         TimePicker tpStart;
@@ -196,6 +247,14 @@ public class UpdateActivity extends ActionBarActivity {
         intent = new Intent(this,MainActivity.class);
         //editText = (EditText) findViewById(R.id.startTime);
         //editText2 = (EditText) findViewById(R.id.endTime);
+=======
+        TimePicker tpStart;
+        TimePicker tpEnd;
+        TextView tvNotes;
+        String activityID = getIntent().getStringExtra(MainActivity.ACTIVITY_ID);
+
+        intent = new Intent(this,MainActivity.class);
+>>>>>>> Stashed changes
         mySpinner = (Spinner) findViewById(R.id.ActivityName);
         mySpinner2 = (Spinner) findViewById(R.id.dayOfWeek);
         tpStart = (TimePicker) findViewById(R.id.timePickerStart);
@@ -203,6 +262,7 @@ public class UpdateActivity extends ActionBarActivity {
         tvNotes = (EditText)findViewById(R.id.Notes);
 
 
+<<<<<<< Updated upstream
 
         //mySpinner3 = (Spinner) findViewById(R.id.amOrpm);
         //mySpinner4 = (Spinner) findViewById(R.id.amOrpm2);
@@ -210,6 +270,10 @@ public class UpdateActivity extends ActionBarActivity {
         db.open();
         db.updateRecord(Long.valueOf(activityID),mySpinner.getSelectedItem().toString(),mySpinner2.getSelectedItem().toString(),tpStart.getCurrentHour(),tpStart.getCurrentMinute(),tpEnd.getCurrentHour(),tpEnd.getCurrentMinute(),false,false,tvNotes.getText().toString());
         // db.updateRecord(Long.valueOf(activityID), mySpinner.getSelectedItem().toString(), mySpinner2.getSelectedItem().toString(), editText.getText().toString(), editText2.getText().toString(),mySpinner3.getSelectedItem().toString(),mySpinner4.getSelectedItem().toString());
+=======
+        db.open();
+        db.updateRecord(Long.valueOf(activityID),mySpinner.getSelectedItem().toString(),mySpinner2.getSelectedItem().toString(),tpStart.getCurrentHour(),tpStart.getCurrentMinute(),tpEnd.getCurrentHour(),tpEnd.getCurrentMinute(),false,false,tvNotes.getText().toString());
+>>>>>>> Stashed changes
         db.close();
         startActivity(intent);
         Toast.makeText(this, "This activity has been updated", Toast.LENGTH_SHORT).show();

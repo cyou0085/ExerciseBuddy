@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ic_exercisebuddy"
         android:label="@string/app_name" >
         <activity
             android:name=".MainActivity"
@@ -33,12 +33,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.carlos.exercisebuddy.MainActivity" />
         </activity>
+<<<<<<< Updated upstream
         <activity
             android:name=".SleepActivity"
             android:label="@string/title_activity_sleep"
             android:theme="@style/Display1">
 
         </activity>
+=======
+
+>>>>>>> Stashed changes
         <service android:name=".MyNotificationService"></service>
     </application>
 

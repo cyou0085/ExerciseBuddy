@@ -33,9 +33,13 @@ public class DBAdapterActivity {
     private static final int DATABASE_VERSION = 2;
 
     //Creates Table
+<<<<<<< Updated upstream
     /*private static final String DATABASE_CREATE =
             "CREATE TABLE " + DATABASE_TABLE + " (id integer primary key autoincrement, "
                     + KEY_DAY + " VARCHAR not null," + KEY_ACTIVITY + " VARCHAR not null," + KEY_SLEEP + " VARCHAR," + KEY_WAKE + " VARCHAR," + KEY_START_AM + " VARCHAR," + KEY_END_AM + " VARCHAR)";*/
+=======
+
+>>>>>>> Stashed changes
     private static final String DATABASE_CREATE =
             "CREATE TABLE " + DATABASE_TABLE + " (id integer primary key autoincrement, "
                     + KEY_DAY + " VARCHAR not null," + KEY_ACTIVITY + " VARCHAR not null," + KEY_STARTH + " INTEGER," + KEY_STARTM + " INTEGER,"+ KEY_ENDH + " INTEGER," + KEY_ENDM + " INTEGER," + KEY_START_AM + " BOOLEAN," + KEY_END_AM + " BOOLEAN," + KEY_NOTES + " VARCHAR)";
@@ -97,6 +101,7 @@ public class DBAdapterActivity {
     }
 
     //---insert a record into the database---
+<<<<<<< Updated upstream
    /* public long insertRecord(String activity, String day, String sleep, String awake,String am1, String am2)
     {
         ContentValues initialValues = new ContentValues();
@@ -108,6 +113,9 @@ public class DBAdapterActivity {
         initialValues.put(KEY_END_AM,am2);
         return db.insert(DATABASE_TABLE, null, initialValues);
     }*/
+=======
+
+>>>>>>> Stashed changes
     public long insertRecord(String activity, String day,int startH, int startM, int endH, int endM,boolean startAM,boolean endAM,String notes)
     {
         ContentValues initialValues = new ContentValues();
@@ -153,6 +161,7 @@ public class DBAdapterActivity {
                 }while(c.moveToNext());
             }
         }
+<<<<<<< Updated upstream
         return Activity_aList;/*
         ArrayList<Activity> Activity_aList = new ArrayList<Activity>();
         Cursor c = db.query(DATABASE_TABLE, new String[] {KEY_ROWID, KEY_ACTIVITY, KEY_DAY,KEY_SLEEP, KEY_WAKE,KEY_START_AM,KEY_END_AM}, null, null, null, null,null);
@@ -172,6 +181,9 @@ public class DBAdapterActivity {
             }
         }
         return Activity_aList;*/
+=======
+        return Activity_aList;
+>>>>>>> Stashed changes
     }
 
     //---retrieves a particular record---
@@ -201,6 +213,7 @@ public class DBAdapterActivity {
     }
 
     //---updates a record---
+<<<<<<< Updated upstream
     /*public boolean updateRecord(long rowId, String activity,String day, String sleep, String awake,String am1, String am2)
     {
         ContentValues args = new ContentValues();
@@ -213,6 +226,9 @@ public class DBAdapterActivity {
         args.put(KEY_END_AM,am2);
         return db.update(DATABASE_TABLE, args, KEY_ROWID + "=" + rowId, null) > 0;
     }*/
+=======
+
+>>>>>>> Stashed changes
     public boolean updateRecord(long rowId, String activity,String day,int startH, int startM, int endH, int endM,boolean startAM,boolean endAM,String notes)
     {
         ContentValues args = new ContentValues();

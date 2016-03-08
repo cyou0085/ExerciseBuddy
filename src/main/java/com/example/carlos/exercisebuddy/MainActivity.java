@@ -33,6 +33,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+<<<<<<< Updated upstream
+=======
+import java.util.Calendar;
+>>>>>>> Stashed changes
 
 
 
@@ -41,7 +45,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     ActivityListAdapter adapter;
     ArrayList<Activity> activityList = new ArrayList <Activity>();
     RectF rect =  new RectF();
+<<<<<<< Updated upstream
     Button setNotify;
+=======
+    //Button setNotify;
+>>>>>>> Stashed changes
 
     public final static String ACTIVITY_ID = "com.example.carlos.exercisebuddy.MainActivity.tvID";
     //boolean alreadyBeen = false;
@@ -49,6 +57,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     //@Override
     protected void onCreate(Bundle savedInstanceState) {
 
+<<<<<<< Updated upstream
         //String activityID = getIntent().getStringExtra(SleepActivity.ACTIVITY_TIMES);
         //String sleepTimes = activityID;
         //Intent numbers = getIntent();
@@ -60,12 +69,19 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             activityID = "00 00 00 00 00 00 00 00";
             Log.i("DW", "no good");
         }*/
+=======
+
+>>>>>>> Stashed changes
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         DBAdapterActivity db = new DBAdapterActivity(this);
+<<<<<<< Updated upstream
         setNotify = (Button) findViewById(R.id.button4);
         setNotify.setOnClickListener(this);
+=======
+
+>>>>>>> Stashed changes
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
         // Get all the Activities from the db and tvs them in an ArrayList
@@ -93,8 +109,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         // Populate the WeekView's activities with the items that were in the
         // database upon application startup.
         WeekView wv = (WeekView) findViewById(R.id.view2);
+<<<<<<< Updated upstream
         //if (activityID != null)
           //  wv.addSleep(sleepTimes);
+=======
+>>>>>>> Stashed changes
         wv.addActivities(activityList);
 
     }
@@ -107,6 +126,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             startService(intent);
         }
 
+<<<<<<< Updated upstream
     }
 
 
@@ -140,6 +160,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     }
 
+=======
+>>>>>>> Stashed changes
     //Adds an Activity to db
     public void AddActivity(View view){
         Intent intent;
@@ -149,6 +171,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     }
 
+<<<<<<< Updated upstream
     //Adds an Activity to db
     public void AddSleep(View view){
 
@@ -270,6 +293,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
         });
     }
+=======
+>>>>>>> Stashed changes
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

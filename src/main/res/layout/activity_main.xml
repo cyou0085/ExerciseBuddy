@@ -45,6 +45,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/view2"
         android:layout_alignEnd="@+id/view2" />
+<<<<<<< Updated upstream
 
     <Button
         android:layout_width="wrap_content"
@@ -56,5 +57,9 @@
         android:layout_alignEnd="@+id/view2"
         android:onClick="AddSleep" />
 
+=======
+
+
+>>>>>>> Stashed changes
 
 </RelativeLayout>

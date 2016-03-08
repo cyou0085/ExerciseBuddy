@@ -22,7 +22,10 @@ public class MyNotificationService extends Service{
     @Override
     public void onCreate(){
         super.onCreate();
+<<<<<<< Updated upstream
         Toast.makeText(this,"onCreate()",Toast.LENGTH_SHORT).show();
+=======
+>>>>>>> Stashed changes
     }
 
     @Override
@@ -34,7 +37,10 @@ public class MyNotificationService extends Service{
     @Override
     public void onStart(Intent intent, int startId){
         super.onStart(intent,startId);
+<<<<<<< Updated upstream
         Toast.makeText(this,"onStart()",Toast.LENGTH_SHORT).show();
+=======
+>>>>>>> Stashed changes
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         Intent notificationIntent = new Intent(this,MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,notificationIntent,0);

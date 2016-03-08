@@ -31,19 +31,43 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
     private Paint mPaint;
     private Paint mActivityPaint;
     private Paint mActivityPaintBlue;
+<<<<<<< Updated upstream
     private Paint mActivityPaintBluelight;
+=======
+    private Paint mActivityPaintAqua;
+>>>>>>> Stashed changes
     private Paint mActivityPaintYellow;
     private Paint mActivityPaintYellowlight;
     private Paint mActivityPaintGreen;
     private Paint mActivityPaintOrange;
+<<<<<<< Updated upstream
     private Paint mWeekPaint;
 
     Context context = getContext();
+=======
+    private Paint mActivityPaintPurple;
+    private Paint mActivityPaintWhite;
+    private Paint mActivityPaintBlack;
+    private Paint mWeekPaint;
+
+    Context context = getContext();
+    Intent notifyIntent = new Intent();
+    Calendar calendarS = Calendar.getInstance();
+    Calendar calendarM = Calendar.getInstance();
+    Calendar calendarT = Calendar.getInstance();
+    Calendar calendarW = Calendar.getInstance();
+    Calendar calendarR = Calendar.getInstance();
+    Calendar calendarF = Calendar.getInstance();
+    Calendar calendarSa = Calendar.getInstance();
+    Calendar calendarNOW = Calendar.getInstance();
+
+>>>>>>> Stashed changes
     //Intent intent = new Intent(context,UpdateActivity.class);
     int mWidth;
     int mHeight;
     private float clickX;
     private float clickY;
+<<<<<<< Updated upstream
     int weekdayStartH;
     int weekdayStartM;
     int weekdayEndH;
@@ -52,14 +76,19 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
     int weekendStartM;
     int weekendEndH;
     int weekendEndM;
+=======
+>>>>>>> Stashed changes
     RectF weekdaySleepTimes;
     ArrayList<Activity> mActivities;
     ArrayList<RectF> mActivityRegions;
     RectF mActivityRegionsMidNight;
+<<<<<<< Updated upstream
     Activity weekDaySleep = new Activity();
     Activity weekEndSleep = new Activity();
     ActivityListAdapter adapter;
     boolean overnight = false;
+=======
+>>>>>>> Stashed changes
     RectF suggestedS;
     RectF suggestedM;
     RectF suggestedT;
@@ -67,7 +96,10 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
     RectF suggestedR;
     RectF suggestedF;
     RectF suggestedSa;
+<<<<<<< Updated upstream
     Activity weekendActivity = new Activity();
+=======
+>>>>>>> Stashed changes
     Activity weekdayActivity;
     Activity workoutActivity;
 
@@ -119,10 +151,13 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
         mActivityPaintBlue.setColor(0xff0000ff);
         mActivityPaintBlue.setAntiAlias(true);
         mActivityPaintBlue.setStyle(Paint.Style.FILL_AND_STROKE);
+<<<<<<< Updated upstream
         mActivityPaintBluelight = new Paint(0);
         mActivityPaintBluelight.setColor(0x330000ff);
         mActivityPaintBluelight.setAntiAlias(true);
         mActivityPaintBlue.setStyle(Paint.Style.FILL_AND_STROKE);
+=======
+>>>>>>> Stashed changes
         mActivityPaintGreen = new Paint(0);
         mActivityPaintGreen.setColor(0xff00ff00);
         mActivityPaintGreen.setAntiAlias(true);
@@ -131,12 +166,34 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
         mActivityPaintOrange.setColor(0xffffa500);
         mActivityPaintOrange.setAntiAlias(true);
         mActivityPaintOrange.setStyle(Paint.Style.FILL_AND_STROKE);
+<<<<<<< Updated upstream
+=======
+        mActivityPaintPurple = new Paint(0);
+        mActivityPaintPurple.setColor(0xffaa33aa);
+        mActivityPaintPurple.setAntiAlias(true);
+        mActivityPaintPurple.setStyle(Paint.Style.FILL_AND_STROKE);
+        mActivityPaintAqua = new Paint(0);
+        mActivityPaintAqua.setColor(0xffff33ff);
+        mActivityPaintAqua.setAntiAlias(true);
+        mActivityPaintAqua.setStyle(Paint.Style.FILL_AND_STROKE);
+        mActivityPaintWhite = new Paint(0);
+        mActivityPaintWhite.setColor(0xffffffff);
+        mActivityPaintWhite.setAntiAlias(true);
+        mActivityPaintWhite.setStyle(Paint.Style.FILL_AND_STROKE);
+        mActivityPaintBlack = new Paint(0);
+        mActivityPaintBlack.setColor(0xff000000);
+        mActivityPaintBlack.setAntiAlias(true);
+        mActivityPaintBlack.setStyle(Paint.Style.FILL_AND_STROKE);
+>>>>>>> Stashed changes
         mWeekPaint = new Paint(0);
         mWeekPaint.setColor(0xff000000);
         mWeekPaint.setTextSize(44);
 
 
+<<<<<<< Updated upstream
         //mPaint.setMaskFilter(new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL));
+=======
+>>>>>>> Stashed changes
 
     }
 
@@ -154,6 +211,7 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
         RectF r = null;
         switch (a.getDayOfWeek()) {
             case "Sunday":
+<<<<<<< Updated upstream
                     r = new RectF(hourWidth * a.getStartTime(), 0, hourWidth * a.getEndTime(), mHeight / 7);
                     break;
             case "Monday":
@@ -173,11 +231,33 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
                 break;
             case "Saturday":
                 r = new RectF(hourWidth * a.getStartTime(), 6 * mHeight / 7, hourWidth * a.getEndTime(), 7 * mHeight / 7);
+=======
+                    r = new RectF(50 + hourWidth * a.getStartTime(), 0, 50 + hourWidth * a.getEndTime(), mHeight / 7);
+                    break;
+            case "Monday":
+                r = new RectF(50 + hourWidth * a.getStartTime(), mHeight / 7, 50 + hourWidth * a.getEndTime(), 2 * mHeight / 7);
+                break;
+            case "Tuesday":
+                r = new RectF(50 + hourWidth * a.getStartTime(), 2 * mHeight / 7, 50 + hourWidth * a.getEndTime(), 3 * mHeight / 7);
+                break;
+            case "Wednesday":
+                r = new RectF(50 + hourWidth * a.getStartTime(), 3 * mHeight / 7, 50 + hourWidth * a.getEndTime(), 4 * mHeight / 7);
+                break;
+            case "Thursday":
+                r = new RectF(50 + hourWidth * a.getStartTime(), 4 * mHeight / 7, 50 + hourWidth * a.getEndTime(), 5 * mHeight / 7);
+                break;
+            case "Friday":
+                r = new RectF(50 + hourWidth * a.getStartTime(), 5 * mHeight / 7, 50 + hourWidth * a.getEndTime(), 6 * mHeight / 7);
+                break;
+            case "Saturday":
+                r = new RectF(50 + hourWidth * a.getStartTime(), 6 * mHeight / 7, 50 + hourWidth * a.getEndTime(), 7 * mHeight / 7);
+>>>>>>> Stashed changes
                 break;
         }
         return r;
     }
 
+<<<<<<< Updated upstream
     private RectF calculateActivityRegion2(Activity a) {
         float hourWidth = this.getWidth()/24.0f;
         RectF r = null;
@@ -213,22 +293,37 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
         }
         return r;
     }
+=======
+
+>>>>>>> Stashed changes
     public void addActivities(ArrayList<Activity> activities) {
         mActivities.addAll(activities);
         for (Activity a : activities) {
             mActivityRegions.add(calculateActivityRegion(a));
+<<<<<<< Updated upstream
             //mActivityRegions.add(calculateActivityRegion(a).get(2));
             //mActivityRegionsMidNight.add(calculateActivityRegion(a).get(2));
         }
     }
 
     protected  RectF suggestWorkOutTuesday(String day,ArrayList <Activity> mActivities,ArrayList<RectF> mActivityRegions) {
+=======
+
+        }
+    }
+
+    protected  RectF suggestWorkOutTime(String day,ArrayList <Activity> mActivities,ArrayList<RectF> mActivityRegions) {
+>>>>>>> Stashed changes
         ArrayList<Activity> mTuesdayActivities = new ArrayList<Activity>();
         ArrayList<RectF> mTuesdayActivitiesRegions = new ArrayList<RectF>();
         boolean freespace = false;
         RectF rect = new RectF();
         int workoutTimeH = 9;
+<<<<<<< Updated upstream
         int workoutTimeM = 00;
+=======
+        int workoutTimeM = 30;
+>>>>>>> Stashed changes
         RectF temp = new RectF();
         workoutActivity.setStartHour(workoutTimeH);
         workoutActivity.setStartMinute(workoutTimeM);
@@ -252,7 +347,10 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
                 if (mTuesdayActivitiesRegions.get(j-1).left > mTuesdayActivitiesRegions.get(j).left) {
                     temp = mTuesdayActivitiesRegions.get(j-1);
                     mTuesdayActivitiesRegions.set(j-1,mTuesdayActivitiesRegions.get(j));
+<<<<<<< Updated upstream
                     //mTuesdayActivitiesRegions.get(j-1) = mTuesdayActivitiesRegions.get(j);
+=======
+>>>>>>> Stashed changes
                     mTuesdayActivitiesRegions.set(j,temp);
                 }
             }
@@ -263,9 +361,13 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
 
 
         for (int count = 0; count < mTuesdayActivitiesRegions.size(); count++) {
+<<<<<<< Updated upstream
             Log.i("cc","TRegion" + mTuesdayActivitiesRegions.get(count));
             Log.i("cc","RectRegion" + rect);
             while(rect.intersect(mTuesdayActivitiesRegions.get(count)) || rect.intersect(weekdaySleepTimes)){
+=======
+            while(rect.intersect(mTuesdayActivitiesRegions.get(count))){
+>>>>>>> Stashed changes
                 workoutTimeM+=5;
                 if(workoutTimeM >= 60){
                     workoutTimeH+=1;
@@ -273,6 +375,7 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
                     workoutActivity.setStartHour(workoutTimeH);
                 }
                 workoutActivity.setStartMinute(workoutTimeM);
+<<<<<<< Updated upstream
                 Log.i("cc","Hour" + workoutActivity.getStartHour());
                 Log.i("cc","Min" + workoutActivity.getStartMinute());
                 rect.set(suggestedDayHelper(day,hourWidth,workoutActivity));
@@ -282,6 +385,147 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
             }
 
         }
+=======
+                rect.set(suggestedDayHelper(day,hourWidth,workoutActivity));
+            }
+        }
+
+
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        notifyIntent = new Intent(getContext(), MyNotificationService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(getContext(),0,notifyIntent,0);
+        switch(day){
+            case "Sunday":
+                    calendarS.set(Calendar.HOUR, workoutActivity.getStartHour());
+                    calendarS.set(Calendar.MINUTE, workoutActivity.getStartMinute());
+                    calendarS.set(Calendar.SECOND,0);
+                calendarS.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+
+                if(calendarS.before(calendarNOW)) {
+
+                    calendarS.add(Calendar.DAY_OF_YEAR, +7);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendarS.getTimeInMillis(),pendingIntent);
+                }
+                else{
+                alarmManager.set(AlarmManager.RTC_WAKEUP,calendarS.getTimeInMillis(),pendingIntent);
+
+                }
+                break;
+            case "Monday":
+
+                    calendarM.set(Calendar.HOUR, workoutActivity.getStartHour());
+                    calendarM.set(Calendar.MINUTE, workoutActivity.getStartMinute());
+                    calendarM.set(Calendar.SECOND,0);
+                    calendarM.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+                if(calendarM.before(calendarNOW)) {
+
+                    calendarM.add(Calendar.DAY_OF_YEAR, +7);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendarM.getTimeInMillis(),pendingIntent);
+                }
+                else{
+
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendarM.getTimeInMillis(),pendingIntent);
+
+                }
+                break;
+            case "Tuesday":
+
+                calendarT.set(Calendar.HOUR, workoutActivity.getStartHour());
+                calendarT.set(Calendar.MINUTE, workoutActivity.getStartMinute());
+                calendarT.set(Calendar.SECOND,0);
+                calendarT.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
+
+                if(calendarT.before(calendarNOW)) {
+
+                    calendarT.add(Calendar.DAY_OF_YEAR, +7);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendarT.getTimeInMillis(),pendingIntent);
+                }
+                else{
+
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendarT.getTimeInMillis(),pendingIntent);
+
+                }
+                break;
+            case "Wednesday":
+                calendarW.set(Calendar.HOUR, workoutActivity.getStartHour());
+                calendarW.set(Calendar.MINUTE, workoutActivity.getStartMinute());
+                calendarW.set(Calendar.SECOND,0);
+                calendarW.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY);
+
+                if(calendarW.before(calendarNOW)) {
+
+                    calendarW.add(Calendar.DAY_OF_YEAR, +7);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendarW.getTimeInMillis(),pendingIntent);
+                }
+                else{
+
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendarW.getTimeInMillis(),pendingIntent);
+
+                }
+                break;
+            case "Thursday":
+                calendarR.set(Calendar.HOUR, workoutActivity.getStartHour());
+                calendarR.set(Calendar.MINUTE, workoutActivity.getStartMinute());
+                calendarR.set(Calendar.SECOND,0);
+                calendarR.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY);
+
+                if(calendarR.before(calendarNOW)) {
+
+                    calendarR.add(Calendar.DAY_OF_YEAR, +7);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendarR.getTimeInMillis(),pendingIntent);
+                }
+                else{
+
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendarR.getTimeInMillis(),pendingIntent);
+
+                }
+                break;
+            case "Friday":
+                calendarF.set(Calendar.HOUR, workoutActivity.getStartHour());
+                calendarF.set(Calendar.MINUTE, workoutActivity.getStartMinute());
+                calendarF.set(Calendar.SECOND,0);
+                calendarF.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
+
+                if(calendarF.before(calendarNOW)) {
+
+                    calendarF.add(Calendar.DAY_OF_YEAR, +7);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendarF.getTimeInMillis(),pendingIntent);
+                }
+                else{
+
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendarF.getTimeInMillis(),pendingIntent);
+
+                }
+                break;
+            case "Saturday":
+                calendarSa.set(Calendar.HOUR, workoutActivity.getStartHour());
+                calendarSa.set(Calendar.MINUTE, workoutActivity.getStartMinute());
+                calendarSa.set(Calendar.SECOND,0);
+                calendarSa.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+
+                if(calendarSa.before(calendarNOW)) {
+
+                    calendarSa.add(Calendar.DAY_OF_YEAR, +7);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendarSa.getTimeInMillis(),pendingIntent);
+                }
+                else{
+
+                    alarmManager.set(AlarmManager.RTC_WAKEUP,calendarSa.getTimeInMillis(),pendingIntent);
+
+                }
+                break;
+        }
+
+        Log.i("CalendarTimeAdjusted", " " + calendarS.getTime());
+        Log.i("CalendarTimeAdjusted", " " + calendarM.getTime());
+        Log.i("CalendarTimeAdjusted", " " + calendarT.getTime());
+        Log.i("CalendarTimeAdjusted", " " + calendarW.getTime());
+        Log.i("CalendarTimeAdjusted", " " + calendarR.getTime());
+        Log.i("CalendarTimeAdjusted", " " + calendarF.getTime());
+        Log.i("CalendarTimeAdjusted", " " + calendarSa.getTime());
+
+>>>>>>> Stashed changes
             return rect;
     }
 
@@ -289,6 +533,7 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
         RectF rect = new RectF();
         switch (day){
             case "Sunday":
+<<<<<<< Updated upstream
                 //
                 rect.set(hourWidth * workoutActivity.getStartTime(),0, (workoutActivity.getStartTime() + .75f) * hourWidth, mHeight/7 );
                 break;
@@ -310,12 +555,36 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
                 break;
             case "Saturday":
                 rect.set(hourWidth * workoutActivity.getStartTime(),6 * mHeight/7, (workoutActivity.getStartTime() + .75f) * hourWidth, mHeight );
+=======
+
+                rect.set(50+hourWidth * workoutActivity.getStartTime(),0, 50+ (workoutActivity.getStartTime() + .5f) * hourWidth, mHeight/7 );
+                break;
+            case "Monday":
+                rect.set(50+ hourWidth * workoutActivity.getStartTime(), mHeight/7, 50+ (workoutActivity.getStartTime() + .5f) * hourWidth, 2*mHeight/7 );
+                break;
+            case "Tuesday":
+                rect.set(50 + (hourWidth * workoutActivity.getStartTime()),2 * mHeight/7, 50 + (workoutActivity.getStartTime() + .5f) * hourWidth, 3 * mHeight/7 );
+
+                break;
+            case "Wednesday":
+                rect.set(50 + hourWidth * workoutActivity.getStartTime(),3 * mHeight/7, 50 + (workoutActivity.getStartTime() + .5f) * hourWidth, 4*mHeight/7 );
+                break;
+            case "Thursday":
+                rect.set(50 + hourWidth * workoutActivity.getStartTime(),4 * mHeight/7, 50+ (workoutActivity.getStartTime() + .5f) * hourWidth, 5*mHeight/7 );
+                break;
+            case "Friday":
+                rect.set(50 + hourWidth * workoutActivity.getStartTime(),5 * mHeight/7, 50 + (workoutActivity.getStartTime() + .5f) * hourWidth, 6*mHeight/7 );
+                break;
+            case "Saturday":
+                rect.set(50 + hourWidth * workoutActivity.getStartTime(),6 * mHeight/7, 50 + (workoutActivity.getStartTime() + .5f) * hourWidth, mHeight );
+>>>>>>> Stashed changes
                 break;
         }
         return rect;
     }
 
 
+<<<<<<< Updated upstream
     public void addSleep(String times){
         weekdayStartH =  Integer.parseInt(times.substring(0,2));
         weekdayStartM = Integer.parseInt(times.substring(3,5));
@@ -345,6 +614,13 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
 
         // Draw the day dividing lines
         canvas.drawRect(new RectF(50, 0, mWidth, mHeight), mPaint);
+=======
+    //Draw a Board that is split into 3 Columns(Morning,Afternoon,Night) and 7 Rows(WeekDays)
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        // Draw the day dividing lines
+>>>>>>> Stashed changes
         canvas.drawText("S", 0, 50 + 0 * mHeight/7, mWeekPaint);
         canvas.drawText("M", 0, 50 + mHeight/7, mWeekPaint);
         canvas.drawText("T", 0, 50 + 2 * mHeight/7, mWeekPaint);
@@ -353,6 +629,7 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
         canvas.drawText("F", 0, 50 + 5 * mHeight/7, mWeekPaint);
         canvas.drawText("S", 0, 50 + 6 * mHeight/7, mWeekPaint);
 
+<<<<<<< Updated upstream
         for (int i = 1; i < 7; i++) {
             canvas.drawLine(45, i * mHeight / 7, mWidth, i * mHeight / 7, mPaint);
         }
@@ -382,6 +659,8 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
         /*Weekend
         canvas.drawRect(50,6*mHeight/7,mWidth/3,mHeight,mActivityPaintOrange);
         canvas.drawRect(50+ 1*mWidth/24,0,mWidth/3,mHeight/7,mActivityPaintOrange);*/
+=======
+>>>>>>> Stashed changes
 
         canvas.drawRect(suggestedS,mActivityPaintYellowlight);
         canvas.drawRect(suggestedM,mActivityPaintYellowlight);
@@ -396,12 +675,16 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
         for (int i = 0; i < mActivities.size(); i++) {
             Activity a = mActivities.get(i);
             RectF r = mActivityRegions.get(i);
+<<<<<<< Updated upstream
 //            RectF r2 = mActivityRegionsMidNight.get(i);
+=======
+>>>>>>> Stashed changes
             Log.i("WeekView", "Drawing activity " + a);
             Log.i("WeekView", "  Corresponding " + r);
             //Creates the block on the canvas with the appropriate
             //color corresponding to the activity thats being done
             switch (a.getActivity()){
+<<<<<<< Updated upstream
                 case "Sleep": canvas.drawRect(r,mActivityPaintYellow);
                     //canvas.drawRect(r2,mActivityPaintYellow);
                     break;
@@ -424,11 +707,40 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
                 default:
                    canvas.drawRect(r,mActivityPaint);
                     //canvas.drawRect(r2,mActivityPaint);
+=======
+                case "Nap": canvas.drawRect(r,mActivityPaintYellow);
+                    break;
+                case "Work": canvas.drawRect(r,mActivityPaintGreen);
+
+                    break;
+                case "Workout/Exercise": canvas.drawRect(r,mActivityPaintBlue);
+
+                    break;
+                case "Class": canvas.drawRect(r,mActivityPaint);
+
+                    break;
+                case "Eating": canvas.drawRect(r,mActivityPaintOrange);
+
+                    break;
+                case "Study/Homework": canvas.drawRect(r,mActivityPaintPurple);
+
+                break;
+                case "Meeting": canvas.drawRect(r,mActivityPaintAqua);
+
+                    break;
+
+                case "Others": canvas.drawRect(r,mActivityPaintWhite);
+
+                    break;
+                default:
+                   canvas.drawRect(r,mActivityPaintBlack);
+>>>>>>> Stashed changes
 
             }
 
         }
 
+<<<<<<< Updated upstream
 
     }
 
@@ -444,6 +756,11 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
         }
 
     }*/
+=======
+    }
+
+
+>>>>>>> Stashed changes
     protected void onSizeChanged (int w, int h, int oldw, int oldh) {
         mWidth = w;
         mHeight = h;
@@ -455,6 +772,7 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
 
         for (Activity a: mActivities) {
             mActivityRegions.add(calculateActivityRegion(a));
+<<<<<<< Updated upstream
             //mActivityRegionsMidNight.add(calculateActivityRegion(a).get(1));
         }
         suggestedS = suggestWorkOutTuesday("Sunday",mActivities,mActivityRegions);
@@ -465,12 +783,23 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
         suggestedF = suggestWorkOutTuesday("Friday",mActivities,mActivityRegions);
         suggestedSa = suggestWorkOutTuesday("Saturday",mActivities,mActivityRegions);
         //weekdaySleepTimes = calculateActivityRegion2(weekdayActivity);
+=======
+        }
+        suggestedS = suggestWorkOutTime("Sunday",mActivities,mActivityRegions);
+        suggestedM = suggestWorkOutTime("Monday",mActivities,mActivityRegions);
+        suggestedT = suggestWorkOutTime("Tuesday",mActivities,mActivityRegions);
+        suggestedW = suggestWorkOutTime("Wednesday",mActivities,mActivityRegions);
+        suggestedR = suggestWorkOutTime("Thursday",mActivities,mActivityRegions);
+        suggestedF = suggestWorkOutTime("Friday",mActivities,mActivityRegions);
+        suggestedSa = suggestWorkOutTime("Saturday",mActivities,mActivityRegions);
+>>>>>>> Stashed changes
 
     }
 
     public boolean onTouchEvent(MotionEvent event) {
         Log.i("WeekView", "onTouchEvent called");
         int action = event.getAction();
+<<<<<<< Updated upstream
         clickX = event.getX();
         clickY = event.getY();
         performClick();
@@ -483,6 +812,20 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
     public void onClick(View v) {
         Intent intent = new Intent(context, UpdateActivity.class);
         Intent notifyIntent = new Intent();
+=======
+        if (action == MotionEvent.ACTION_UP) {
+            clickX = event.getX();
+            clickY = event.getY();
+            performClick();
+        }
+        return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(context, UpdateActivity.class);
+
+>>>>>>> Stashed changes
         float hourWidth = this.getWidth()/24.0f;
 
         for (int i = 0; i < mActivityRegions.size(); i++) {
@@ -494,6 +837,7 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
                 context.startActivity(intent);
                 return;
             }
+<<<<<<< Updated upstream
             if (suggestWorkOutTuesday("Sunday",mActivities,mActivityRegions).contains(clickX, clickY) ||
                     suggestWorkOutTuesday("Monday",mActivities,mActivityRegions).contains(clickX, clickY) ||
                     suggestWorkOutTuesday("Tuesday",mActivities,mActivityRegions).contains(clickX, clickY)
@@ -563,3 +907,10 @@ DBAdapterActivity db = new DBAdapterActivity(getContext());
         });
     }*/
 }
+=======
+        }
+
+    }
+
+}
+>>>>>>> Stashed changes

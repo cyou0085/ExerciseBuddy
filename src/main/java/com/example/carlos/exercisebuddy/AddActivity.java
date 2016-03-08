@@ -34,6 +34,7 @@ DBAdapterActivity db = new DBAdapterActivity(this);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsWeek);
         dropdownWeek.setAdapter(adapter2);
 
+<<<<<<< Updated upstream
 /*
         Spinner dropdownAM = (Spinner)findViewById(R.id.amOrpm);
         String[] itemsTime = new String[]{"AM","PM"};
@@ -45,6 +46,8 @@ DBAdapterActivity db = new DBAdapterActivity(this);
         ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, itemsTime2);
         dropdownAM2.setAdapter(adapter4);*/
 
+=======
+>>>>>>> Stashed changes
     }
 
     @Override
@@ -65,12 +68,18 @@ DBAdapterActivity db = new DBAdapterActivity(this);
     public void AddActivity(View view) {
         //Create Local Variables to store new db values
         Intent intent;
+<<<<<<< Updated upstream
         //EditText editText;
         //EditText editText2;
         Spinner spinnerActivity;
         Spinner spinnerWeekDay;
         //Spinner spinnerAMorPMStart;
         //Spinner spinnerAMorPMEnd;
+=======
+
+        Spinner spinnerActivity;
+        Spinner spinnerWeekDay;
+>>>>>>> Stashed changes
         TimePicker tpStart;
         TimePicker tpEnd;
         Boolean startAM=false;
@@ -79,8 +88,11 @@ DBAdapterActivity db = new DBAdapterActivity(this);
         String Notes;
         //assign them to the corresponding xml element
         intent = new Intent(this,MainActivity.class);
+<<<<<<< Updated upstream
         //editText = (EditText) findViewById(R.id.startTime);
         //editText2 = (EditText) findViewById(R.id.endTime);
+=======
+>>>>>>> Stashed changes
         spinnerActivity = (Spinner) findViewById(R.id.ActivityName);
         spinnerWeekDay = (Spinner) findViewById(R.id.dayOfWeek);
         tpStart = (TimePicker) findViewById(R.id.timePickerStart);
@@ -111,10 +123,14 @@ DBAdapterActivity db = new DBAdapterActivity(this);
         if(tpEnd.getCurrentHour() < 12)
             endAM = true;
 
+<<<<<<< Updated upstream
         //spinnerAMorPMStart = (Spinner) findViewById(R.id.amOrpm);
         //spinnerAMorPMEnd = (Spinner) findViewById(R.id.amOrpm2);
         //tpStart.getCurrentHour();
         //tpEnd.getCurrentHour();
+=======
+
+>>>>>>> Stashed changes
         //Opens db and inserts values into the table
 
         db.open();
@@ -127,10 +143,13 @@ DBAdapterActivity db = new DBAdapterActivity(this);
 
     }
 
+<<<<<<< Updated upstream
     public void ViewActivity(View view){
         Intent intent;
         intent = new Intent(getBaseContext(), MainActivity.class);
         startActivity(intent);
 
     }
+=======
+>>>>>>> Stashed changes
 }
